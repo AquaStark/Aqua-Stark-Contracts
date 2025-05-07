@@ -74,6 +74,22 @@ pub trait FishTrait {
 }
 
 impl FishImpl of FishTrait {
+    fn is_dead(fish: Fish) -> bool {
+        fish.health == 0
+    }
+
+    fn is_hungry(fish: Fish) -> bool {
+        fish.hunger_level <= 80
+    }
+
+    fn is_fully_grown(fish: Fish) -> bool {
+        fish.growth >= 100
+    }
+
+    fn can_eat(fish: Fish) -> bool {
+        fish.hunger_level < 100
+    }
+
     fn get_health(fish: Fish) -> u8 {
         fish.health
     }
@@ -93,13 +109,13 @@ impl FishImpl of FishTrait {
     }
     fn update_hunger(mut fish: Fish, hours_passed: u8) -> Fish {
         // Calculate hunger decrease
-        let hunger_decrease = hours_passed * 2;
+        let hunger_increase = hours_passed * 2;
 
         // Update hunger
-        let new_hunger = if hunger_decrease > fish.hunger_level {
+        let new_hunger = if hunger_increase > fish.hunger_level {
             0
         } else {
-            fish.hunger_level - hunger_decrease
+            fish.hunger_level + hunger_increase
         };
 
         fish.hunger_level = new_hunger;
@@ -181,15 +197,16 @@ impl FishImpl of FishTrait {
     fn feed(mut fish: Fish, amount: u8) -> Fish {
         let caller = get_caller_address();
         assert(caller == fish.owner, 'Not your Fish');
+        assert(fish.hunger_level < 100, 'Fish is dead');
 
-        // Update hunger
-        let new_hunger = if fish.hunger_level - amount < 0 {
-            0
+        if ((fish.hunger_level + amount) <= 0) {
+            fish.hunger_level = 0
         } else {
-            fish.hunger_level - amount
-        };
+            // Update hunger
+            let new_hunger = fish.hunger_level - amount;
 
-        fish.hunger_level = new_hunger;
+            fish.hunger_level = new_hunger;
+        }
 
         fish
     }
@@ -200,8 +217,8 @@ impl FishImpl of FishTrait {
         fish.owner = owner;
         fish.age = 0;
         fish.health = 100;
-        fish.hunger_level = 100;
-        fish.growth = 0;
+        fish.hunger_level = 80;
+        fish.growth = 4;
         fish.generation = 1;
         fish.birth_time = timestamp;
         fish.parent_ids = (0, 0);
@@ -265,8 +282,8 @@ impl FishImpl of FishTrait {
         let g: bool = timestamp % 2 == 0;
 
         if parent1.species == parent2.species {
-            offspring.fish_type = parent1.fish_type;
             offspring.species = parent1.species;
+            offspring.fish_type = parent1.fish_type;
 
             // Inherit color & pattern randomly
             if g {
@@ -296,8 +313,8 @@ impl FishImpl of FishTrait {
         offspring.owner = owner;
         offspring.age = 0;
         offspring.health = 100;
-        offspring.hunger_level = 100;
-        offspring.growth = 0;
+        offspring.hunger_level = 80;
+        offspring.growth = 4;
         offspring.birth_time = timestamp;
         offspring.parent_ids = (parent1.id, parent2.id);
 
@@ -312,8 +329,8 @@ impl FishImpl of FishTrait {
         fish.owner = owner;
         fish.age = 0;
         fish.health = 100;
-        fish.hunger_level = 100;
-        fish.growth = 0;
+        fish.hunger_level = 20;
+        fish.growth = 4;
         fish.generation = 1;
         fish.birth_time = timestamp;
         fish.parent_ids = (0, 0);
@@ -358,23 +375,6 @@ impl FishImpl of FishTrait {
 
         fish
     }
-
-
-    fn is_dead(fish: Fish) -> bool {
-        fish.health == 0
-    }
-
-    fn is_hungry(fish: Fish) -> bool {
-        fish.hunger_level < 20
-    }
-
-    fn is_fully_grown(fish: Fish) -> bool {
-        fish.growth >= 100
-    }
-
-    fn can_eat(fish: Fish) -> bool {
-        fish.hunger_level < 100
-    }
 }
 
 
@@ -387,17 +387,240 @@ mod tests {
     fn zero_address() -> ContractAddress {
         contract_address_const::<0>()
     }
-    // #[test]
-// fn test_fish_creation() {
-//     let fish = Fish {
-//         id: 1_u64,
-//         fish_type: 1_u32,
-//         age: 0,
-//         hunger_level: 0,
-//         health: 100,
-//         growth: 0,
-//         owner: zero_address(),
-//     };
-//     assert(fish.fish_type == 1, 'Fish type should match');
-// }
+    #[test]
+    fn test_fish_creation() {
+        let fish = Fish {
+            id: 1,
+            fish_type: 1,
+            age: 0,
+            hunger_level: 0,
+            health: 100,
+            growth: 4,
+            owner: zero_address(),
+            species: Species::AngelFish,
+            generation: 1,
+            color: 'blue',
+            pattern: Pattern::Plain,
+            size: 2,
+            speed: 8,
+            birth_time: get_block_timestamp(),
+            parent_ids: (0, 0),
+            mutation_rate: 5,
+        };
+        assert(fish.fish_type == 1, 'Fish type should match');
+    }
+
+    #[test]
+    fn test_create_random_fish() {
+        let fish = Fish {
+            id: 1,
+            fish_type: 0,
+            age: 0,
+            hunger_level: 0,
+            health: 0,
+            growth: 4,
+            owner: zero_address(),
+            species: Species::AngelFish,
+            generation: 0,
+            color: '',
+            pattern: Pattern::Plain,
+            size: 0,
+            speed: 0,
+            birth_time: 0,
+            parent_ids: (0, 0),
+            mutation_rate: 5,
+        };
+
+        let new_fish: Fish = FishTrait::create_random_fish(fish, zero_address());
+        assert(new_fish.generation == 1, 'Fish generation error');
+    }
+
+    #[test]
+    fn test_create_fish_by_Specie() {
+        let fish = Fish {
+            id: 1,
+            fish_type: 0,
+            age: 0,
+            hunger_level: 0,
+            health: 0,
+            growth: 4,
+            owner: zero_address(),
+            species: Species::AngelFish,
+            generation: 0,
+            color: '',
+            pattern: Pattern::Plain,
+            size: 0,
+            speed: 0,
+            birth_time: 0,
+            parent_ids: (0, 0),
+            mutation_rate: 5,
+        };
+
+        let parent1: Fish = FishTrait::create_fish_by_species(
+            fish, zero_address(), Species::AngelFish,
+        );
+        let parent: Fish = FishTrait::create_fish_by_species(
+            fish, zero_address(), Species::GoldFish,
+        );
+        assert(parent1.species == Species::AngelFish, 'Fish Species error');
+        assert(parent1.color == 'blue', 'Color error');
+        assert(parent1.pattern == Pattern::Plain, 'Pattern error');
+        assert(parent1.size == 5, 'size error');
+        assert(parent1.speed == 4, 'speed error');
+        assert(parent1.mutation_rate == 5, 'mutation_rate error');
+
+        assert(parent.species == Species::GoldFish, 'Fish Species error');
+        assert(parent.color == 'gold', 'Color error');
+        assert(parent.pattern == Pattern::Spotted, 'Pattern error');
+        assert(parent.size == 4, 'size error');
+        assert(parent.speed == 3, 'speed error');
+        assert(parent.mutation_rate == 3, 'mutation_rate error');
+    }
+    #[test]
+    fn test_create_hybrid_offspring() {
+        let fish = Fish {
+            id: 1,
+            fish_type: 0,
+            age: 0,
+            hunger_level: 0,
+            health: 0,
+            growth: 4,
+            owner: zero_address(),
+            species: Species::AngelFish,
+            generation: 0,
+            color: '',
+            pattern: Pattern::Plain,
+            size: 0,
+            speed: 0,
+            birth_time: 0,
+            parent_ids: (0, 0),
+            mutation_rate: 5,
+        };
+
+        let parent2: Fish = FishTrait::create_fish_by_species(
+            fish, zero_address(), Species::AngelFish,
+        );
+        let parent1: Fish = FishTrait::create_fish_by_species(
+            fish, zero_address(), Species::GoldFish,
+        );
+        let offspring: Fish = FishTrait::create_offspring(fish, zero_address(), parent1, parent2);
+        assert(offspring.species == Species::Hybrid, 'offspring Species error');
+        assert(offspring.pattern == Pattern::Spotted, 'offspring pattern error');
+    }
+
+    #[test]
+    fn test_create_pure_offspring() {
+        let fish = Fish {
+            id: 1,
+            fish_type: 0,
+            age: 0,
+            hunger_level: 0,
+            health: 0,
+            growth: 4,
+            owner: zero_address(),
+            species: Species::AngelFish,
+            generation: 0,
+            color: '',
+            pattern: Pattern::Plain,
+            size: 0,
+            speed: 0,
+            birth_time: 0,
+            parent_ids: (0, 0),
+            mutation_rate: 5,
+        };
+
+        let parent2: Fish = FishTrait::create_fish_by_species(
+            fish, zero_address(), Species::AngelFish,
+        );
+        let parent1: Fish = FishTrait::create_fish_by_species(
+            fish, zero_address(), Species::AngelFish,
+        );
+        let offspring: Fish = FishTrait::create_offspring(fish, zero_address(), parent1, parent2);
+        assert(offspring.species == Species::AngelFish, 'offspring Species error');
+        assert(offspring.pattern == Pattern::Plain, 'offspring pattern error');
+    }
+
+    #[test]
+    fn test_fish_feeding() {
+        let fish = Fish {
+            id: 1,
+            fish_type: 0,
+            age: 0,
+            hunger_level: 0,
+            health: 0,
+            growth: 4,
+            owner: zero_address(),
+            species: Species::AngelFish,
+            generation: 0,
+            color: '',
+            pattern: Pattern::Plain,
+            size: 0,
+            speed: 0,
+            birth_time: 0,
+            parent_ids: (0, 0),
+            mutation_rate: 5,
+        };
+
+        let new_fish: Fish = FishTrait::create_fish_by_species(
+            fish, zero_address(), Species::AngelFish,
+        );
+
+        let health: u8 = FishTrait::get_health(new_fish);
+        let is_hungry: bool = FishTrait::is_hungry(new_fish);
+
+        let hungry_fish: Fish = FishTrait::update_hunger(new_fish, 6);
+        let new_hunger: u8 = FishTrait::get_hunger_level(hungry_fish);
+
+        let feed_fish: Fish = FishTrait::feed(hungry_fish, 92);
+        let hunger_level: u8 = FishTrait::get_hunger_level(feed_fish);
+
+        assert(is_hungry, 'Hunger error');
+        assert(new_hunger == 92, 'Update hunger error');
+        assert(health == 100, 'get health error');
+        assert(hunger_level == 0, 'get hunger_level error');
+    }
+
+    #[test]
+    fn test_fish_growth() {
+        let fish = Fish {
+            id: 1,
+            fish_type: 0,
+            age: 0,
+            hunger_level: 0,
+            health: 0,
+            growth: 0,
+            owner: zero_address(),
+            species: Species::AngelFish,
+            generation: 0,
+            color: '',
+            pattern: Pattern::Plain,
+            size: 0,
+            speed: 0,
+            birth_time: 0,
+            parent_ids: (0, 0),
+            mutation_rate: 5,
+        };
+
+        let new_fish: Fish = FishTrait::create_fish_by_species(
+            fish, zero_address(), Species::AngelFish,
+        );
+
+        let growth: u8 = FishTrait::get_growth_rate(new_fish);
+        // let is_hungry: bool = FishTrait::is_hungry(new_fish);
+        // assert(is_hungry, 'Hunger error');
+
+        // let hungry_fish: Fish = FishTrait::update_hunger(new_fish, 6);
+        // let new_hunger: u8 = FishTrait::get_hunger_level(hungry_fish);
+
+        // let feed_fish: Fish = FishTrait::feed(hungry_fish, 92);
+        // let hunger_level: u8 = FishTrait::get_hunger_level(feed_fish);
+
+        // let species: u8 = FishTrait::get_health(new_fish);
+        // let generation: u8 = FishTrait::get_health(new_fish);
+        // let color: u8 = FishTrait::get_health(new_fish);
+        println!("growth level: {}", growth);
+        // println!("feed_fish hunger level: {}", hunger_level);
+    // assert(health == 100, 'get health error');
+    // assert(hunger_level == 0, 'get hunger_level error');
+    }
 }
