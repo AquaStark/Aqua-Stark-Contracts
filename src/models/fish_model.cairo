@@ -8,6 +8,7 @@ pub struct FishCounter {
     pub current_val: u256,
 }
 
+
 #[derive(Serde, Copy, Introspect, Drop, PartialEq)]
 enum Species {
     #[default]
@@ -38,6 +39,7 @@ pub struct Fish {
     pub hunger_level: u8, // 0-100 scale
     pub health: u8, // 0-100 scale
     pub growth: u8, // 0-100 scale
+    pub growth_rate: u8,
     pub owner: ContractAddress,
     pub species: Species,
     pub generation: u8,
@@ -48,6 +50,7 @@ pub struct Fish {
     pub birth_time: u64,
     pub parent_ids: (u64, u64),
     pub mutation_rate: u8,
+    pub growth_counter: u8,
 }
 
 pub trait FishTrait {
@@ -95,7 +98,7 @@ impl FishImpl of FishTrait {
     }
 
     fn get_growth_rate(fish: Fish) -> u8 {
-        fish.growth
+        fish.growth_rate
     }
 
     fn get_hunger_level(fish: Fish) -> u8 {
@@ -109,6 +112,8 @@ impl FishImpl of FishTrait {
     }
     fn update_hunger(mut fish: Fish, hours_passed: u8) -> Fish {
         // Calculate hunger decrease
+        assert(fish.hunger_level > 0, 'Fish dead');
+
         let hunger_increase = hours_passed * 2;
 
         // Update hunger
@@ -119,6 +124,7 @@ impl FishImpl of FishTrait {
         };
 
         fish.hunger_level = new_hunger;
+    
 
         fish
     }
@@ -230,6 +236,7 @@ impl FishImpl of FishTrait {
                 fish.color = 'blue';
                 fish.pattern = Pattern::Plain;
                 fish.size = 5;
+                fish.growth_rate = 5;
                 fish.speed = 4;
                 fish.mutation_rate = 5;
             },
@@ -237,6 +244,7 @@ impl FishImpl of FishTrait {
                 fish.color = 'gold';
                 fish.pattern = Pattern::Spotted;
                 fish.size = 4;
+                fish.growth_rate = 4;
                 fish.speed = 3;
                 fish.mutation_rate = 3;
             },
@@ -244,6 +252,7 @@ impl FishImpl of FishTrait {
                 fish.color = 'red';
                 fish.pattern = Pattern::Stripes;
                 fish.size = 3;
+                fish.growth_rate = 3;
                 fish.speed = 5;
                 fish.mutation_rate = 4;
             },
@@ -251,6 +260,7 @@ impl FishImpl of FishTrait {
                 fish.color = 'neon';
                 fish.pattern = Pattern::Plain;
                 fish.size = 2;
+                fish.growth_rate = 2;
                 fish.speed = 5;
                 fish.mutation_rate = 2;
             },
@@ -258,6 +268,7 @@ impl FishImpl of FishTrait {
                 fish.color = 'silver';
                 fish.pattern = Pattern::Spotted;
                 fish.size = 4;
+                fish.growth_rate = 4;
                 fish.speed = 3;
                 fish.mutation_rate = 3;
             },
@@ -266,6 +277,7 @@ impl FishImpl of FishTrait {
                 fish.color = 'gray';
                 fish.pattern = Pattern::Plain;
                 fish.size = 3;
+                fish.growth_rate = 3;
                 fish.speed = 3;
                 fish.mutation_rate = 3;
             },
@@ -299,9 +311,11 @@ impl FishImpl of FishTrait {
             if !g {
                 offspring.color = parent1.color;
                 offspring.pattern = parent2.pattern;
+                offspring.growth_rate = parent1.growth_rate;
             } else {
                 offspring.color = parent2.color;
                 offspring.pattern = parent1.pattern;
+                offspring.growth_rate = parent2.growth_rate;
             }
         }
         offspring.speed = (parent1.speed + parent2.speed) / 2;
@@ -314,6 +328,7 @@ impl FishImpl of FishTrait {
         offspring.age = 0;
         offspring.health = 100;
         offspring.hunger_level = 80;
+
         offspring.growth = 4;
         offspring.birth_time = timestamp;
         offspring.parent_ids = (parent1.id, parent2.id);
@@ -330,6 +345,7 @@ impl FishImpl of FishTrait {
         fish.age = 0;
         fish.health = 100;
         fish.hunger_level = 20;
+
         fish.growth = 4;
         fish.generation = 1;
         fish.birth_time = timestamp;
@@ -341,6 +357,7 @@ impl FishImpl of FishTrait {
             fish.color = 'blue';
             fish.pattern = Pattern::Plain;
             fish.size = 5;
+            fish.growth_rate = 5;
             fish.speed = 4;
             fish.mutation_rate = 5;
         } else if species_index == 1 {
@@ -348,6 +365,7 @@ impl FishImpl of FishTrait {
             fish.color = 'gold';
             fish.pattern = Pattern::Spotted;
             fish.size = 4;
+            fish.growth_rate = 4;
             fish.speed = 3;
             fish.mutation_rate = 3;
         } else if species_index == 2 {
@@ -355,6 +373,7 @@ impl FishImpl of FishTrait {
             fish.color = 'red';
             fish.pattern = Pattern::Stripes;
             fish.size = 3;
+            fish.growth_rate = 3;
             fish.speed = 5;
             fish.mutation_rate = 4;
         } else if species_index == 3 {
@@ -362,6 +381,7 @@ impl FishImpl of FishTrait {
             fish.color = 'neon';
             fish.pattern = Pattern::Plain;
             fish.size = 2;
+            fish.growth_rate = 2;
             fish.speed = 5;
             fish.mutation_rate = 2;
         } else if species_index == 4 {
@@ -369,6 +389,7 @@ impl FishImpl of FishTrait {
             fish.color = 'silver';
             fish.pattern = Pattern::Spotted;
             fish.size = 4;
+            fish.growth_rate = 4;
             fish.speed = 3;
             fish.mutation_rate = 3;
         }
@@ -395,7 +416,7 @@ mod tests {
             age: 0,
             hunger_level: 0,
             health: 100,
-            growth: 4,
+            growth: 0,
             owner: zero_address(),
             species: Species::AngelFish,
             generation: 1,
@@ -406,6 +427,8 @@ mod tests {
             birth_time: get_block_timestamp(),
             parent_ids: (0, 0),
             mutation_rate: 5,
+            growth_counter: 0,
+            growth_rate: 4,
         };
         assert(fish.fish_type == 1, 'Fish type should match');
     }
@@ -418,7 +441,7 @@ mod tests {
             age: 0,
             hunger_level: 0,
             health: 0,
-            growth: 4,
+            growth: 0,
             owner: zero_address(),
             species: Species::AngelFish,
             generation: 0,
@@ -429,6 +452,8 @@ mod tests {
             birth_time: 0,
             parent_ids: (0, 0),
             mutation_rate: 5,
+            growth_counter: 0,
+            growth_rate: 5,
         };
 
         let new_fish: Fish = FishTrait::create_random_fish(fish, zero_address());
@@ -454,6 +479,8 @@ mod tests {
             birth_time: 0,
             parent_ids: (0, 0),
             mutation_rate: 5,
+            growth_counter: 0,
+            growth_rate: 5,
         };
 
         let parent1: Fish = FishTrait::create_fish_by_species(
@@ -495,6 +522,8 @@ mod tests {
             birth_time: 0,
             parent_ids: (0, 0),
             mutation_rate: 5,
+            growth_counter: 0,
+            growth_rate: 0,
         };
 
         let parent2: Fish = FishTrait::create_fish_by_species(
@@ -527,6 +556,8 @@ mod tests {
             birth_time: 0,
             parent_ids: (0, 0),
             mutation_rate: 5,
+            growth_counter: 0,
+            growth_rate: 0,
         };
 
         let parent2: Fish = FishTrait::create_fish_by_species(
@@ -559,6 +590,8 @@ mod tests {
             birth_time: 0,
             parent_ids: (0, 0),
             mutation_rate: 5,
+            growth_counter: 0,
+            growth_rate: 0,
         };
 
         let new_fish: Fish = FishTrait::create_fish_by_species(
@@ -599,6 +632,8 @@ mod tests {
             birth_time: 0,
             parent_ids: (0, 0),
             mutation_rate: 5,
+            growth_counter: 0,
+            growth_rate: 4,
         };
 
         let new_fish: Fish = FishTrait::create_fish_by_species(
