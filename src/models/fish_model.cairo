@@ -124,7 +124,6 @@ impl FishImpl of FishTrait {
         };
 
         fish.hunger_level = new_hunger;
-    
 
         fish
     }
