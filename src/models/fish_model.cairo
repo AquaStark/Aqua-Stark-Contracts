@@ -38,7 +38,7 @@ pub struct Fish {
     pub age: u32, // in days
     pub hunger_level: u8, // 0-100 scale
     pub health: u8, // 0-100 scale
-    pub growth: u8, // 0-100 scale
+    pub growth: u64, // 0-100 scale
     pub growth_rate: u8,
     pub owner: ContractAddress,
     pub species: Species,
@@ -51,6 +51,7 @@ pub struct Fish {
     pub parent_ids: (u64, u64),
     pub mutation_rate: u8,
     pub growth_counter: u8,
+    pub can_grow: bool,
 }
 
 pub trait FishTrait {
@@ -65,7 +66,7 @@ pub trait FishTrait {
     ) -> Fish;
     fn create_random_fish(fish: Fish, owner: ContractAddress) -> Fish;
     fn feed(fish: Fish, amount: u8) -> Fish;
-    fn grow(fish: Fish, amount: u8) -> Fish;
+    fn grow(fish: Fish, amount: u64) -> Fish;
     fn heal(fish: Fish, amount: u8) -> Fish;
     fn damage(fish: Fish, species: Species, amount: u8) -> Fish;
     fn regenerate_health(fish: Fish, aquarium_cleanliness: u8) -> Fish;
@@ -183,11 +184,13 @@ impl FishImpl of FishTrait {
         fish
     }
 
-    fn grow(mut fish: Fish, amount: u8) -> Fish {
+    fn grow(mut fish: Fish, amount: u64) -> Fish {
         let caller = get_caller_address();
+        let timestamp = get_block_timestamp();
         // Check ownership
         assert(fish.owner == caller, 'Not your Fish');
 
+        let new_grow = ((timestamp - fish.birth_time) * fish.mutation_rate.into()) / 86400;
         // Update growth
         let new_growth = if fish.growth + amount > 100 {
             100
@@ -195,7 +198,7 @@ impl FishImpl of FishTrait {
             fish.growth + amount
         };
 
-        fish.growth = new_growth;
+        fish.growth = new_grow + new_growth;
         fish
     }
 
@@ -207,10 +210,18 @@ impl FishImpl of FishTrait {
         if ((fish.hunger_level + amount) <= 0) {
             fish.hunger_level = 0
         } else {
+            if (fish.hunger_level < 30) {
+                fish.can_grow == true;
+            }
             // Update hunger
             let new_hunger = fish.hunger_level - amount;
 
             fish.hunger_level = new_hunger;
+            if ((fish.hunger_level == 100) && fish.can_grow) {
+                fish.growth += 2;
+                fish.health += 1;
+                fish.can_grow = false;
+            }
         }
 
         fish
@@ -428,6 +439,7 @@ mod tests {
             mutation_rate: 5,
             growth_counter: 0,
             growth_rate: 4,
+            can_grow: false,
         };
         assert(fish.fish_type == 1, 'Fish type should match');
     }
@@ -453,6 +465,7 @@ mod tests {
             mutation_rate: 5,
             growth_counter: 0,
             growth_rate: 5,
+            can_grow: false,
         };
 
         let new_fish: Fish = FishTrait::create_random_fish(fish, zero_address());
@@ -480,6 +493,7 @@ mod tests {
             mutation_rate: 5,
             growth_counter: 0,
             growth_rate: 5,
+            can_grow: false,
         };
 
         let parent1: Fish = FishTrait::create_fish_by_species(
@@ -523,6 +537,7 @@ mod tests {
             mutation_rate: 5,
             growth_counter: 0,
             growth_rate: 0,
+            can_grow: false,
         };
 
         let parent2: Fish = FishTrait::create_fish_by_species(
@@ -557,6 +572,7 @@ mod tests {
             mutation_rate: 5,
             growth_counter: 0,
             growth_rate: 0,
+            can_grow: false,
         };
 
         let parent2: Fish = FishTrait::create_fish_by_species(
@@ -591,6 +607,7 @@ mod tests {
             mutation_rate: 5,
             growth_counter: 0,
             growth_rate: 0,
+            can_grow: false,
         };
 
         let new_fish: Fish = FishTrait::create_fish_by_species(
@@ -633,6 +650,7 @@ mod tests {
             mutation_rate: 5,
             growth_counter: 0,
             growth_rate: 4,
+            can_grow: false,
         };
 
         let new_fish: Fish = FishTrait::create_fish_by_species(
