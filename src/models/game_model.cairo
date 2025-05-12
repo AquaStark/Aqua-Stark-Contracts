@@ -12,32 +12,25 @@ pub struct GameCounter {
 
 #[derive(Drop, Serde)]
 #[dojo::model]
-
 pub struct Game {
     #[key]
     id: u64, // Unique ID of the game instance
-
     created_by: felt252, // Wallet address that initialized the game
     is_initialized: bool, // Indicates if the game has been properly initialized
-
     // Core entity tracking
     total_players: u32,
     total_aquariums: u32,
     total_fish: u32,
     total_decorations: u32,
-
     // Genetic system data
     fish_genealogy_enabled: bool, // Whether full genealogy tracking is active
     fish_genes_onchain: bool, // Whether gene computations are on-chain
-
     // Marketplace and ownership tracking
     marketplace_enabled: bool,
     auctions_enabled: bool,
-
     // Status tracking
     active_events: Array<felt252>, // List of active event IDs
     leaderboard: Array<(felt252, u64)>, // (player_address, score)
-
     // Timestamp & game metadata
     created_at: u64,
     last_updated: u64,
@@ -46,18 +39,10 @@ pub struct Game {
 
 pub trait GameTrait {
     // Create and return a new game
-    fn new(
-        id: u64,
-        created_by: felt252,
-      
-    ) -> Game;
+    fn new(id: u64, created_by: felt252) -> Game;
     fn restart(ref self: Game);
     fn terminate_game(ref self: Game);
 }
-
-
-
-
 // impl GameImpl of GameTrait {
 //     fn new(
 //         id: u64,
@@ -141,4 +126,5 @@ pub trait GameTrait {
 //         self.status = GameStatus::Ended;
 //     }
 // }
+
 

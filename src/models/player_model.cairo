@@ -24,10 +24,14 @@ pub struct Player {
 }
 
 pub trait PlayerTrait {
-    fn register_player(id: u256, inventory_ref: ContractAddress, aquariums: Array<u64>,fishes: Array<u64>) -> Player;
+    fn register_player(
+        id: u256, inventory_ref: ContractAddress, aquariums: Array<u64>, fishes: Array<u64>,
+    ) -> Player;
 }
 impl PlayerImpl of PlayerTrait {
-    fn register_player(id: u256, inventory_ref: ContractAddress, aquariums: Array<u64>,fishes: Array<u64>) -> Player {
+    fn register_player(
+        id: u256, inventory_ref: ContractAddress, aquariums: Array<u64>, fishes: Array<u64>,
+    ) -> Player {
         let timestamp = get_block_timestamp();
         let caller = get_caller_address();
 
@@ -39,7 +43,6 @@ impl PlayerImpl of PlayerTrait {
             registered_at: timestamp,
             aquariums: aquariums,
             fishes: fishes,
-            
         };
         player
     }
