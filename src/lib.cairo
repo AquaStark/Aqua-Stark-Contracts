@@ -1,7 +1,7 @@
 pub mod systems {
     pub mod actions;
-    // pub mod AquaCoin;
 }
+pub mod AquaCoin;
 
 pub mod models {
     pub mod aquarium_model;
