@@ -21,6 +21,22 @@ pub struct PlayerFish {
     pub owner: ContractAddress,
 }
 
+#[derive(Drop, Copy, Serde)]
+#[dojo::model]
+pub struct UsernameToAddress {
+    #[key]
+    pub username: felt252,
+    pub address: ContractAddress,
+}
+
+#[derive(Drop, Copy, Serde)]
+#[dojo::model]
+pub struct AddressToUsername {
+    #[key]
+    pub address: ContractAddress,
+    pub username: felt252,
+}
+
 // #[derive(Serde, Clone, Drop, Introspect)]
 // #[dojo::model]
 // pub struct PlayerAquarium {
@@ -37,6 +53,7 @@ pub struct Player {
     #[key]
     pub wallet: ContractAddress,
     pub id: u256,
+    pub username: felt252,
     pub inventory_ref: ContractAddress,
     pub is_verified: bool,
     pub aquarium_count: u32,
@@ -46,7 +63,11 @@ pub struct Player {
 
 pub trait PlayerTrait {
     fn register_player(
-        id: u256, inventory_ref: ContractAddress, aquarium_count: u32, fish_count: u32,
+        id: u256,
+        username: felt252,
+        inventory_ref: ContractAddress,
+        aquarium_count: u32,
+        fish_count: u32,
     ) -> Player;
     // fn add_fish(player: Player, player_fish: PlayerFish);
 // fn add_aquarium(player: Player, player_aquarium: PlayerAquarium);
@@ -55,7 +76,11 @@ pub trait PlayerTrait {
 }
 impl PlayerImpl of PlayerTrait {
     fn register_player(
-        id: u256, inventory_ref: ContractAddress, aquarium_count: u32, fish_count: u32,
+        id: u256,
+        username: felt252,
+        inventory_ref: ContractAddress,
+        aquarium_count: u32,
+        fish_count: u32,
     ) -> Player {
         let timestamp = get_block_timestamp();
         let caller = get_caller_address();
@@ -63,6 +88,7 @@ impl PlayerImpl of PlayerTrait {
         let player = Player {
             wallet: caller,
             id: id,
+            username: username,
             inventory_ref: inventory_ref,
             is_verified: false,
             registered_at: timestamp,
@@ -112,6 +138,7 @@ mod tests {
         let player = Player {
             wallet: zero_address(),
             id: 1,
+            username: 'Aji',
             inventory_ref: zero_address(),
             is_verified: false,
             registered_at: time,

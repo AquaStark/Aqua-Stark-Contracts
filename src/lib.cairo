@@ -1,5 +1,9 @@
 pub mod systems {
-    pub mod actions;
+    pub mod AquaStark;
+}
+
+pub mod interfaces {
+    pub mod IAquaStark;
 }
 pub mod AquaCoin;
 
@@ -9,8 +13,7 @@ pub mod models {
     pub mod player_model;
     pub mod game_model;
 }
-// pub mod tests {
-//     mod test_world;
-// }
-
+pub mod tests {
+    mod test_world;
+}
 

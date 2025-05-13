@@ -6,18 +6,26 @@ mod tests {
     use dojo_cairo_test::{
         spawn_test_world, NamespaceDef, TestResource, ContractDefTrait, ContractDef,
     };
-
-    use dojo_starter::systems::actions::{actions, IActionsDispatcher, IActionsDispatcherTrait};
-    use dojo_starter::models::{Position, m_Position, Moves, m_Moves, Direction};
+    use starknet::{testing, get_caller_address, contract_address_const};
+    use dojo_starter::systems::AquaStark::{AquaStark};
+    use dojo_starter::interfaces::IAquaStark::{
+        IAquaStark, IAquaStarkDispatcher, IAquaStarkDispatcherTrait,
+    };
+    use dojo_starter::models::player_model::{
+        Player, m_Player, PlayerCounter, m_PlayerCounter, UsernameToAddress, m_UsernameToAddress,
+        AddressToUsername, m_AddressToUsername,
+    };
 
     fn namespace_def() -> NamespaceDef {
         let ndef = NamespaceDef {
             namespace: "dojo_starter",
             resources: [
-                TestResource::Model(m_Position::TEST_CLASS_HASH),
-                TestResource::Model(m_Moves::TEST_CLASS_HASH),
-                TestResource::Event(actions::e_Moved::TEST_CLASS_HASH),
-                TestResource::Contract(actions::TEST_CLASS_HASH),
+                TestResource::Model(m_Player::TEST_CLASS_HASH),
+                TestResource::Model(m_PlayerCounter::TEST_CLASS_HASH),
+                TestResource::Model(m_UsernameToAddress::TEST_CLASS_HASH),
+                TestResource::Model(m_AddressToUsername::TEST_CLASS_HASH),
+                TestResource::Event(AquaStark::e_PlayerCreated::TEST_CLASS_HASH),
+                TestResource::Contract(AquaStark::TEST_CLASS_HASH),
             ]
                 .span(),
         };
@@ -27,16 +35,18 @@ mod tests {
 
     fn contract_defs() -> Span<ContractDef> {
         [
-            ContractDefTrait::new(@"dojo_starter", @"actions")
+            ContractDefTrait::new(@"dojo_starter", @"AquaStark")
                 .with_writer_of([dojo::utils::bytearray_hash(@"dojo_starter")].span())
         ]
             .span()
     }
 
     #[test]
-    fn test_world_test_set() {
+    fn test_register_player() {
         // Initialize test environment
-        let caller = starknet::contract_address_const::<0x0>();
+        // let caller = starknet::contract_address_const::<0x0>();
+        let caller_1 = contract_address_const::<'aji'>();
+        let caller_2 = contract_address_const::<'ajiii'>();
         let ndef = namespace_def();
 
         // Register the resources.
@@ -45,55 +55,30 @@ mod tests {
         // Ensures permissions and initializations are synced.
         world.sync_perms_and_inits(contract_defs());
 
-        // Test initial position
-        let mut position: Position = world.read_model(caller);
-        assert(position.vec.x == 0 && position.vec.y == 0, 'initial position wrong');
-
-        // Test write_model_test
-        position.vec.x = 122;
-        position.vec.y = 88;
-
-        world.write_model_test(@position);
-
-        let mut position: Position = world.read_model(caller);
-        assert(position.vec.y == 88, 'write_value_from_id failed');
-
-        // Test model deletion
-        world.erase_model(@position);
-        let position: Position = world.read_model(caller);
-        assert(position.vec.x == 0 && position.vec.y == 0, 'erase_model failed');
-    }
-
-    #[test]
-    #[available_gas(30000000)]
-    fn test_move() {
-        let caller = starknet::contract_address_const::<0x0>();
+        let username = 'Aji';
+        let username1 = 'Ajii';
 
         let ndef = namespace_def();
         let mut world = spawn_test_world([ndef].span());
         world.sync_perms_and_inits(contract_defs());
 
-        let (contract_address, _) = world.dns(@"actions").unwrap();
-        let actions_system = IActionsDispatcher { contract_address };
+        let (contract_address, _) = world.dns(@"AquaStark").unwrap();
+        let actions_system = IAquaStarkDispatcher { contract_address };
 
-        actions_system.spawn();
-        let initial_moves: Moves = world.read_model(caller);
-        let initial_position: Position = world.read_model(caller);
+        testing::set_contract_address(caller_1);
+        actions_system.register(username);
 
-        assert(
-            initial_position.vec.x == 10 && initial_position.vec.y == 10, 'wrong initial position',
-        );
+        let player = actions_system.get_player(caller_1);
+        assert(player.id == 1, 'Incorrect id');
+        assert(player.username == 'Aji', 'incorrect username');
+        assert(player.wallet == caller_1, 'invalid address');
 
-        actions_system.move(Direction::Right(()).into());
+        testing::set_contract_address(caller_2);
+        actions_system.register(username1);
 
-        let moves: Moves = world.read_model(caller);
-        let right_dir_felt: felt252 = Direction::Right(()).into();
-
-        assert(moves.remaining == initial_moves.remaining - 1, 'moves is wrong');
-        assert(moves.last_direction.unwrap().into() == right_dir_felt, 'last direction is wrong');
-
-        let new_position: Position = world.read_model(caller);
-        assert(new_position.vec.x == initial_position.vec.x + 1, 'position x is wrong');
-        assert(new_position.vec.y == initial_position.vec.y, 'position y is wrong');
+        let player1 = actions_system.get_player(caller_2);
+        assert(player1.id == 2, 'Incorrect id');
+        assert(player1.username == 'Ajii', 'incorrect username');
+        assert(player1.wallet == caller_2, 'invalid address');
     }
 }
