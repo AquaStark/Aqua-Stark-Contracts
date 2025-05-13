@@ -1,4 +1,6 @@
-use starknet::{ContractAddress, get_block_timestamp, get_caller_address};
+use starknet::{ContractAddress, get_block_timestamp, get_caller_address, contract_address_const};
+use crate::models::aquarium_model::{Aquarium};
+use crate::models::fish_model::{Fish};
 
 
 #[derive(Serde, Copy, Drop, Introspect, PartialEq)]
@@ -9,8 +11,27 @@ pub struct PlayerCounter {
     pub current_val: u256,
 }
 
+#[derive(Serde, Copy, Drop, Introspect)]
+#[dojo::model]
+pub struct PlayerFish {
+    #[key]
+    pub fish: Fish,
+    #[key]
+    pub game_id: u256,
+    pub owner: ContractAddress,
+}
 
-#[derive(Clone, Drop, Serde, Debug)]
+// #[derive(Serde, Clone, Drop, Introspect)]
+// #[dojo::model]
+// pub struct PlayerAquarium {
+//     #[key]
+//     pub aquarium: Aquarium,
+//     #[key]
+//     pub game_id: u256,
+//     pub owner: ContractAddress,
+// }
+
+#[derive(Clone, Drop, Serde)]
 #[dojo::model]
 pub struct Player {
     #[key]
@@ -18,19 +39,23 @@ pub struct Player {
     pub id: u256,
     pub inventory_ref: ContractAddress,
     pub is_verified: bool,
-    pub aquariums: Array<u64>,
-    pub fishes: Array<u64>,
+    pub aquarium_count: u32,
+    pub fish_count: u32,
     pub registered_at: u64,
 }
 
 pub trait PlayerTrait {
     fn register_player(
-        id: u256, inventory_ref: ContractAddress, aquariums: Array<u64>, fishes: Array<u64>,
+        id: u256, inventory_ref: ContractAddress, aquarium_count: u32, fish_count: u32,
     ) -> Player;
+    // fn add_fish(player: Player, player_fish: PlayerFish);
+// fn add_aquarium(player: Player, player_aquarium: PlayerAquarium);
+// fn remove_aquarium(aquarium: Aquarium, player: Player, player_aquarium: PlayerAquarium);
+// fn remove_fish(fish: Fish, player: Player, player_fish: PlayerFish);
 }
 impl PlayerImpl of PlayerTrait {
     fn register_player(
-        id: u256, inventory_ref: ContractAddress, aquariums: Array<u64>, fishes: Array<u64>,
+        id: u256, inventory_ref: ContractAddress, aquarium_count: u32, fish_count: u32,
     ) -> Player {
         let timestamp = get_block_timestamp();
         let caller = get_caller_address();
@@ -41,11 +66,34 @@ impl PlayerImpl of PlayerTrait {
             inventory_ref: inventory_ref,
             is_verified: false,
             registered_at: timestamp,
-            aquariums: aquariums,
-            fishes: fishes,
+            aquarium_count: 0,
+            fish_count: 0,
         };
         player
     }
+    // fn add_fish(mut player: Player, mut player_fish: PlayerFish) {
+//     let caller = get_caller_address();
+//     player_fish.owner = caller;
+//     player.fish_count += 1;
+// }
+// fn add_aquarium(mut player: Player, mut player_aquarium: PlayerAquarium) {
+//     let caller = get_caller_address();
+//     player_aquarium.owner = caller;
+//     player.aquarium_count += 1;
+// }
+// fn remove_aquarium(
+//     aquarium: Aquarium, mut player: Player, mut player_aquarium: PlayerAquarium,
+// ) {
+//     let zero_address = contract_address_const::<0>();
+//     player_aquarium.owner = zero_address;
+//     player.aquarium_count -= 1;
+// }
+
+    // fn remove_fish(fish: Fish, mut player: Player, mut player_fish: PlayerFish) {
+//     let zero_address = contract_address_const::<0>();
+//     player_fish.owner = zero_address;
+//     player.fish_count -= 1;
+// }
 }
 
 #[cfg(test)]
@@ -67,6 +115,8 @@ mod tests {
             inventory_ref: zero_address(),
             is_verified: false,
             registered_at: time,
+            aquarium_count: 0,
+            fish_count: 0,
         };
         assert(player.id == 1, 'Player ID should match');
     }
