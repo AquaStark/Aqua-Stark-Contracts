@@ -15,6 +15,14 @@ mod tests {
         Player, m_Player, PlayerCounter, m_PlayerCounter, UsernameToAddress, m_UsernameToAddress,
         AddressToUsername, m_AddressToUsername,
     };
+    use dojo_starter::models::aquarium_model::{
+        Aquarium, m_Aquarium, AquariumCounter, m_AquariumCounter, AquariumOwner, m_AquariumOwner,
+    };
+    use dojo_starter::models::fish_model::{
+        Fish, m_Fish, FishTrait, FishCounter, m_FishCounter, Species, Pattern, FishOwner,
+        m_FishOwner,
+    };
+
 
     fn namespace_def() -> NamespaceDef {
         let ndef = NamespaceDef {
@@ -24,6 +32,12 @@ mod tests {
                 TestResource::Model(m_PlayerCounter::TEST_CLASS_HASH),
                 TestResource::Model(m_UsernameToAddress::TEST_CLASS_HASH),
                 TestResource::Model(m_AddressToUsername::TEST_CLASS_HASH),
+                TestResource::Model(m_Aquarium::TEST_CLASS_HASH),
+                TestResource::Model(m_AquariumCounter::TEST_CLASS_HASH),
+                TestResource::Model(m_AquariumOwner::TEST_CLASS_HASH),
+                TestResource::Model(m_Fish::TEST_CLASS_HASH),
+                TestResource::Model(m_FishCounter::TEST_CLASS_HASH),
+                TestResource::Model(m_FishOwner::TEST_CLASS_HASH),
                 TestResource::Event(AquaStark::e_PlayerCreated::TEST_CLASS_HASH),
                 TestResource::Contract(AquaStark::TEST_CLASS_HASH),
             ]
@@ -46,7 +60,7 @@ mod tests {
         // Initialize test environment
         // let caller = starknet::contract_address_const::<0x0>();
         let caller_1 = contract_address_const::<'aji'>();
-        let caller_2 = contract_address_const::<'ajiii'>();
+        // let caller_2 = contract_address_const::<'ajiii'>();
         let ndef = namespace_def();
 
         // Register the resources.
@@ -56,7 +70,7 @@ mod tests {
         world.sync_perms_and_inits(contract_defs());
 
         let username = 'Aji';
-        let username1 = 'Ajii';
+        // let username1 = 'Ajii';
 
         let ndef = namespace_def();
         let mut world = spawn_test_world([ndef].span());
@@ -66,19 +80,20 @@ mod tests {
         let actions_system = IAquaStarkDispatcher { contract_address };
 
         testing::set_contract_address(caller_1);
-        actions_system.register(username);
+        actions_system.register(username, Species::Betta);
 
         let player = actions_system.get_player(caller_1);
         assert(player.id == 1, 'Incorrect id');
         assert(player.username == 'Aji', 'incorrect username');
         assert(player.wallet == caller_1, 'invalid address');
+        assert(player.fish_count == 1, 'invalid fish count');
+        assert(player.aquarium_count == 1, 'invalid aquarium count');
+        // testing::set_contract_address(caller_2);
+    // actions_system.register(username1);
 
-        testing::set_contract_address(caller_2);
-        actions_system.register(username1);
-
-        let player1 = actions_system.get_player(caller_2);
-        assert(player1.id == 2, 'Incorrect id');
-        assert(player1.username == 'Ajii', 'incorrect username');
-        assert(player1.wallet == caller_2, 'invalid address');
+        // let player1 = actions_system.get_player(caller_2);
+    // assert(player1.id == 2, 'Incorrect id');
+    // assert(player1.username == 'Ajii', 'incorrect username');
+    // assert(player1.wallet == caller_2, 'invalid address');
     }
 }

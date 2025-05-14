@@ -4,7 +4,7 @@ use starknet::{ContractAddress, get_caller_address};
 #[dojo::model]
 pub struct Aquarium {
     #[key]
-    pub id: u64,
+    pub id: u256,
     pub owner: ContractAddress,
     pub max_capacity: u32,
     pub cleanliness: u32, // 0-100 scale
@@ -19,8 +19,24 @@ pub struct AquariumCounter {
     pub current_val: u256,
 }
 
+#[derive(Serde, Copy, Drop, Introspect)]
+#[dojo::model]
+pub struct AquariumOwner {
+    #[key]
+    pub id: u256,
+    pub owner: ContractAddress,
+}
+#[derive(Serde, Clone, Drop, Introspect)]
+#[dojo::model]
+pub struct AquariumFishes {
+    #[key]
+    pub id: u256,
+    pub owner: ContractAddress,
+    // pub aquarium: Aquarium,
+}
+
 pub trait AquariumTrait {
-    fn create_aquarium(aquarium_id: u64, owner: ContractAddress, max_capacity: u32) -> Aquarium;
+    fn create_aquarium(aquarium_id: u256, owner: ContractAddress, max_capacity: u32) -> Aquarium;
     fn add_fish(aquarium: Aquarium, fish_id: u64) -> Aquarium;
     fn remove_fish(aquarium: Aquarium, fish_id: u64) -> Aquarium;
     fn clean(aquarium: Aquarium, amount: u32) -> Aquarium;
@@ -32,7 +48,7 @@ pub trait AquariumTrait {
 }
 
 impl AquariumImpl of AquariumTrait {
-    fn create_aquarium(aquarium_id: u64, owner: ContractAddress, max_capacity: u32) -> Aquarium {
+    fn create_aquarium(aquarium_id: u256, owner: ContractAddress, max_capacity: u32) -> Aquarium {
         // Create new aquarium
         let aquarium = Aquarium {
             id: aquarium_id,
@@ -135,7 +151,7 @@ mod tests {
     fn test_aquarium_creation() {
         // Create a new aquarium
         let aquarium = Aquarium {
-            id: 1_u64,
+            id: 1,
             owner: zero_address(),
             max_capacity: 10,
             cleanliness: 100,
@@ -149,7 +165,7 @@ mod tests {
     #[test]
     fn test_add_fish() {
         let aquarium = Aquarium {
-            id: 1_u64,
+            id: 1,
             owner: zero_address(),
             max_capacity: 10,
             cleanliness: 100,
@@ -164,7 +180,7 @@ mod tests {
     #[test]
     fn test_remove_fish() {
         let aquarium = Aquarium {
-            id: 1_u64,
+            id: 1,
             owner: zero_address(),
             max_capacity: 3,
             cleanliness: 100,
@@ -182,7 +198,7 @@ mod tests {
     fn test_aquarium_cleaning() {
         // Initialize an aquarium with a cleanliness of 50
         let aquarium = Aquarium {
-            id: 1_u64,
+            id: 1,
             owner: zero_address(),
             max_capacity: 3,
             cleanliness: 50,
@@ -204,7 +220,7 @@ mod tests {
     fn test_update_aquarium_cleaning() {
         // Create an aquarium with capacity of 3 and initial cleanliness of 100
         let aquarium = Aquarium {
-            id: 1_u64,
+            id: 1,
             owner: zero_address(),
             max_capacity: 3,
             cleanliness: 100,
@@ -234,7 +250,7 @@ mod tests {
     fn test_aquarium_overflow() {
         // Create an aquarium with a capacity of 2
         let aquarium = Aquarium {
-            id: 1_u64,
+            id: 1,
             owner: zero_address(),
             max_capacity: 2,
             cleanliness: 100,

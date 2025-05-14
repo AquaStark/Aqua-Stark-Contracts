@@ -11,6 +11,15 @@ pub struct PlayerCounter {
     pub current_val: u256,
 }
 
+#[derive(Serde, Clone, Drop, Introspect)]
+#[dojo::model]
+pub struct PlayerFishes {
+    #[key]
+    pub id: u256,
+    pub owner: ContractAddress,
+    pub fish: Fish,
+}
+
 #[derive(Serde, Copy, Drop, Introspect)]
 #[dojo::model]
 pub struct PlayerFish {

@@ -10,7 +10,7 @@ pub struct FishCounter {
 
 
 #[derive(Serde, Copy, Introspect, Drop, PartialEq)]
-enum Species {
+pub enum Species {
     #[default]
     AngelFish,
     GoldFish,
@@ -21,19 +21,26 @@ enum Species {
 }
 
 #[derive(Serde, Copy, Introspect, Drop, PartialEq)]
-enum Pattern {
+pub enum Pattern {
     #[default]
     Plain,
     Spotted,
     Stripes,
 }
 
+#[derive(Serde, Copy, Drop, Introspect)]
+#[dojo::model]
+pub struct FishOwner {
+    #[key]
+    pub id: u256,
+    pub owner: ContractAddress,
+}
 
 #[derive(Copy, Drop, Introspect, Serde)]
 #[dojo::model]
 pub struct Fish {
     #[key]
-    pub id: u64,
+    pub id: u256,
     pub fish_type: u8,
     pub age: u32, // in days
     pub hunger_level: u8, // 0-100 scale
@@ -48,7 +55,7 @@ pub struct Fish {
     pub size: u8,
     pub speed: u32,
     pub birth_time: u64,
-    pub parent_ids: (u64, u64),
+    pub parent_ids: (u256, u256),
     pub mutation_rate: u8,
     pub growth_counter: u8,
     pub can_grow: bool,
