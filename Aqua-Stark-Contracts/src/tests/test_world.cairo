@@ -6,11 +6,12 @@ mod tests {
     use dojo_cairo_test::{
         spawn_test_world, NamespaceDef, TestResource, ContractDefTrait, ContractDef,
     };
-    use starknet::{testing, get_caller_address, contract_address_const};
+    use starknet::{testing, get_caller_address, ContractAddress, contract_address_const};
     use dojo_starter::systems::AquaStark::{AquaStark};
     use dojo_starter::interfaces::IAquaStark::{
         IAquaStark, IAquaStarkDispatcher, IAquaStarkDispatcherTrait,
     };
+    use dojo_starter::contracts::usdc::{IExternalDispatcher, IExternalDispatcherTrait};
     use dojo_starter::models::player_model::{
         Player, m_Player, PlayerCounter, m_PlayerCounter, UsernameToAddress, m_UsernameToAddress,
         AddressToUsername, m_AddressToUsername,
@@ -23,6 +24,10 @@ mod tests {
         m_FishOwner,
     };
 
+    // use snforge_std::{
+    //     ContractClassTrait, DeclareResultTrait, EventSpy, EventSpyAssertionsTrait, declare,
+    //     spy_events, start_cheat_caller_address, stop_cheat_caller_address, test_address,
+    // };
 
     fn namespace_def() -> NamespaceDef {
         let ndef = NamespaceDef {
@@ -54,6 +59,28 @@ mod tests {
         ]
             .span()
     }
+
+
+    // fn setup() -> (ContractAddress, ContractAddress, IAquaStarkDispatcher, IExternalDispatcher) {
+    //     let sender: ContractAddress = contract_address_const::<'sender'>();
+    //     // Deploy mock ERC20
+    //     let erc20_class = declare("MockUsdc").unwrap().contract_class();
+    //     let mut calldata = array![sender.into(), sender.into(), 6];
+    //     let (erc20_address, _) = erc20_class.deploy(@calldata).unwrap();
+
+    //     // Deploy Aqua-coin contract
+    //     // let contract_owner: ContractAddress = contract_address_const::<'contract_owner'>();
+    //     let aqua_coin_class = declare("AquaCoin").unwrap().contract_class();
+    //     let mut calldata = array![sender.into(), sender.into(), 6, erc20_address.into()];
+    //     let (aqua_coin_class_address, _) = aqua_coin_class.deploy(@calldata).unwrap();
+
+    //     (
+    //         erc20_address,
+    //         sender,
+    //         IAquaStarkDispatcher { contract_address: aqua_coin_class_address },
+    //         IExternalDispatcher { contract_address: erc20_address },
+    //     )
+    // }
 
     #[test]
     fn test_register_player() {
@@ -88,12 +115,5 @@ mod tests {
         assert(player.wallet == caller_1, 'invalid address');
         assert(player.fish_count == 1, 'invalid fish count');
         assert(player.aquarium_count == 1, 'invalid aquarium count');
-        // testing::set_contract_address(caller_2);
-    // actions_system.register(username1);
-
-        // let player1 = actions_system.get_player(caller_2);
-    // assert(player1.id == 2, 'Incorrect id');
-    // assert(player1.username == 'Ajii', 'incorrect username');
-    // assert(player1.wallet == caller_2, 'invalid address');
     }
 }

@@ -37,7 +37,7 @@ pub mod MockUsdc {
     fn constructor(
         ref self: ContractState, recipient: ContractAddress, owner: ContractAddress, decimals: u8,
     ) {
-        self.erc20.initializer(format!("AquaCoin"), format!("AQC"));
+        self.erc20.initializer(format!("USDC"), format!("USDC"));
         self.ownable.initializer(owner);
         self.custom_decimals.write(decimals);
 
