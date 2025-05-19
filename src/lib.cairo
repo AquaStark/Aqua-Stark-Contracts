@@ -5,10 +5,6 @@ pub mod systems {
 pub mod interfaces {
     pub mod IAquaStark;
 }
-pub mod contracts {
-    pub mod AquaCoin;
-    pub mod usdc;
-}
 
 pub mod models {
     pub mod aquarium_model;
