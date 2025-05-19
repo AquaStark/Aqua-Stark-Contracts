@@ -11,7 +11,7 @@ mod tests {
     use dojo_starter::interfaces::IAquaStark::{
         IAquaStark, IAquaStarkDispatcher, IAquaStarkDispatcherTrait,
     };
-    use dojo_starter::contracts::usdc::{IExternalDispatcher, IExternalDispatcherTrait};
+
     use dojo_starter::models::player_model::{
         Player, m_Player, PlayerCounter, m_PlayerCounter, UsernameToAddress, m_UsernameToAddress,
         AddressToUsername, m_AddressToUsername,
@@ -60,27 +60,6 @@ mod tests {
             .span()
     }
 
-
-    // fn setup() -> (ContractAddress, ContractAddress, IAquaStarkDispatcher, IExternalDispatcher) {
-    //     let sender: ContractAddress = contract_address_const::<'sender'>();
-    //     // Deploy mock ERC20
-    //     let erc20_class = declare("MockUsdc").unwrap().contract_class();
-    //     let mut calldata = array![sender.into(), sender.into(), 6];
-    //     let (erc20_address, _) = erc20_class.deploy(@calldata).unwrap();
-
-    //     // Deploy Aqua-coin contract
-    //     // let contract_owner: ContractAddress = contract_address_const::<'contract_owner'>();
-    //     let aqua_coin_class = declare("AquaCoin").unwrap().contract_class();
-    //     let mut calldata = array![sender.into(), sender.into(), 6, erc20_address.into()];
-    //     let (aqua_coin_class_address, _) = aqua_coin_class.deploy(@calldata).unwrap();
-
-    //     (
-    //         erc20_address,
-    //         sender,
-    //         IAquaStarkDispatcher { contract_address: aqua_coin_class_address },
-    //         IExternalDispatcher { contract_address: erc20_address },
-    //     )
-    // }
 
     #[test]
     fn test_register_player() {
