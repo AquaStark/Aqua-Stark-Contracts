@@ -23,11 +23,10 @@ mod tests {
         Fish, m_Fish, FishTrait, FishCounter, m_FishCounter, Species, Pattern, FishOwner,
         m_FishOwner,
     };
+    use dojo_starter::models::decoration_model::{
+        Decoration, m_Decoration, DecorationCounter, m_DecorationCounter,
+    };
 
-    // use snforge_std::{
-    //     ContractClassTrait, DeclareResultTrait, EventSpy, EventSpyAssertionsTrait, declare,
-    //     spy_events, start_cheat_caller_address, stop_cheat_caller_address, test_address,
-    // };
 
     fn namespace_def() -> NamespaceDef {
         let ndef = NamespaceDef {
@@ -43,6 +42,8 @@ mod tests {
                 TestResource::Model(m_Fish::TEST_CLASS_HASH),
                 TestResource::Model(m_FishCounter::TEST_CLASS_HASH),
                 TestResource::Model(m_FishOwner::TEST_CLASS_HASH),
+                TestResource::Model(m_Decoration::TEST_CLASS_HASH),
+                TestResource::Model(m_DecorationCounter::TEST_CLASS_HASH),
                 TestResource::Event(AquaStark::e_PlayerCreated::TEST_CLASS_HASH),
                 TestResource::Contract(AquaStark::TEST_CLASS_HASH),
             ]
@@ -89,10 +90,18 @@ mod tests {
         actions_system.register(username, Species::Betta);
 
         let player = actions_system.get_player(caller_1);
+        let fish = actions_system.get_fish(1);
+        let aquarium = actions_system.get_aquarium(1);
+        let decoration = actions_system.get_decoration(1);
+
+        assert(fish.owner == caller_1, 'Fish Error');
+        assert(decoration.owner == caller_1, 'Decoration Error');
+        assert(aquarium.owner == caller_1, 'Aquarium Error');
         assert(player.id == 1, 'Incorrect id');
         assert(player.username == 'Aji', 'incorrect username');
         assert(player.wallet == caller_1, 'invalid address');
         assert(player.fish_count == 1, 'invalid fish count');
         assert(player.aquarium_count == 1, 'invalid aquarium count');
+        assert(player.decoration_count == 1, 'invalid aquarium count');
     }
 }

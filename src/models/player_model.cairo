@@ -67,6 +67,7 @@ pub struct Player {
     pub is_verified: bool,
     pub aquarium_count: u32,
     pub fish_count: u32,
+    pub decoration_count: u32,
     pub registered_at: u64,
 }
 
@@ -102,6 +103,7 @@ impl PlayerImpl of PlayerTrait {
             is_verified: false,
             registered_at: timestamp,
             aquarium_count: 0,
+            decoration_count: 0,
             fish_count: 0,
         };
         player
@@ -153,6 +155,7 @@ mod tests {
             registered_at: time,
             aquarium_count: 0,
             fish_count: 0,
+            decoration_count: 0,
         };
         assert(player.id == 1, 'Player ID should match');
     }

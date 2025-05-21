@@ -9,6 +9,7 @@ pub mod AquaStark {
         Player, PlayerTrait, PlayerCounter, UsernameToAddress, AddressToUsername,
     };
     use dojo_starter::models::aquarium_model::{Aquarium, AquariumCounter, AquariumOwner};
+    use dojo_starter::models::decoration_model::{Decoration, DecorationCounter, DecorationTrait};
     use dojo_starter::models::fish_model::{Fish, FishCounter, Species, FishTrait, FishOwner};
 
     use dojo::model::{ModelStorage};
@@ -39,6 +40,15 @@ pub mod AquaStark {
             let new_val = game_counter.current_val + 1;
             game_counter.current_val = new_val;
             world.write_model(@game_counter);
+            new_val
+        }
+
+        fn create_decoration_id(ref self: ContractState) -> u256 {
+            let mut world = self.world_default();
+            let mut decoration_counter: DecorationCounter = world.read_model('v0');
+            let new_val = decoration_counter.current_val + 1;
+            decoration_counter.current_val = new_val;
+            world.write_model(@decoration_counter);
             new_val
         }
 
@@ -79,6 +89,29 @@ pub mod AquaStark {
             world.write_model(@aquarium);
 
             aquarium
+        }
+
+        fn new_decoration(
+            ref self: ContractState,
+            aquarium_id: u256,
+            name: felt252,
+            description: felt252,
+            price: u256,
+            rarity: felt252,
+        ) -> Decoration {
+            let mut world = self.world_default();
+            let id = self.create_decoration_id();
+
+            let mut decoration = world.read_model(id);
+
+            decoration =
+                DecorationTrait::decoration(
+                    decoration, id, aquarium_id, name, description, price, rarity,
+                );
+
+            world.write_model(@decoration);
+
+            decoration
         }
 
         fn new_fish(ref self: ContractState, owner: ContractAddress, species: Species) -> Fish {
@@ -129,11 +162,14 @@ pub mod AquaStark {
 
             // --- Aquarium Setup ---
 
-            self.new_aquarium(caller, 10);
+            let aquarium = self.new_aquarium(caller, 10);
             new_player.aquarium_count += 1;
 
             self.new_fish(caller, species);
             new_player.fish_count += 1;
+
+            self.new_decoration(aquarium.id, 'Pebbles', 'Shiny rocks', 0, 0);
+            new_player.decoration_count += 1;
 
             // --- Persist to Storage ---
 
@@ -154,6 +190,21 @@ pub mod AquaStark {
             let player: Player = world.read_model(address);
             player
         }
+        fn get_fish(ref self: ContractState, id: u256) -> Fish {
+            let mut world = self.world_default();
+            let fish: Fish = world.read_model(id);
+            fish
+        }
+        fn get_aquarium(ref self: ContractState, id: u256) -> Aquarium {
+            let mut world = self.world_default();
+            let aquarium: Aquarium = world.read_model(id);
+            aquarium
+        }
+        fn get_decoration(ref self: ContractState, id: u256) -> Decoration {
+            let mut world = self.world_default();
+            let decoration: Decoration = world.read_model(id);
+            decoration
+        }
     }
 
     #[generate_trait]
@@ -165,18 +216,4 @@ pub mod AquaStark {
         }
     }
 }
-// Define function like this:
-// fn next_position(mut position: Position, direction: Option<Direction>) -> Position {
-//     match direction {
-//         Option::None => { return position; },
-//         Option::Some(d) => match d {
-//             Direction::Left => { position.vec.x -= 1; },
-//             Direction::Right => { position.vec.x += 1; },
-//             Direction::Up => { position.vec.y -= 1; },
-//             Direction::Down => { position.vec.y += 1; },
-//         },
-//     };
-//     position
-// }
-
 
