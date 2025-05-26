@@ -1,16 +1,16 @@
 // dojo decorator
 #[dojo::contract]
 pub mod AquaStark {
-    use dojo_starter::interfaces::IAquaStark::{IAquaStark};
+    use aqua_stark::interfaces::IAquaStark::{IAquaStark};
     use starknet::{
         ContractAddress, get_caller_address, get_block_timestamp, contract_address_const,
     };
-    use dojo_starter::models::player_model::{
+    use aqua_stark::models::player_model::{
         Player, PlayerTrait, PlayerCounter, UsernameToAddress, AddressToUsername,
     };
-    use dojo_starter::models::aquarium_model::{Aquarium, AquariumCounter, AquariumOwner};
-    use dojo_starter::models::decoration_model::{Decoration, DecorationCounter, DecorationTrait};
-    use dojo_starter::models::fish_model::{Fish, FishCounter, Species, FishTrait, FishOwner};
+    use aqua_stark::models::aquarium_model::{Aquarium, AquariumCounter, AquariumOwner};
+    use aqua_stark::models::decoration_model::{Decoration, DecorationCounter, DecorationTrait};
+    use aqua_stark::models::fish_model::{Fish, FishCounter, Species, FishTrait, FishOwner};
 
     use dojo::model::{ModelStorage};
     use dojo::event::EventStorage;
@@ -90,6 +90,16 @@ pub mod AquaStark {
 
             aquarium
         }
+
+        fn add_fish_to_aquarium(ref self: ContractState, mut fish: Fish, aquarium_id: u256) {
+            let mut world = self.world_default();
+            let mut aquarium: Aquarium = world.read_model(aquarium_id);
+            assert(aquarium.max_capacity < aquarium.housed_fish.len(), 'Aquarium full');
+        }
+
+        fn add_decoration_to_aquarium(
+            ref self: ContractState, mut decoration: Decoration, aquarium_id: u256,
+        ) {}
 
         fn new_decoration(
             ref self: ContractState,
@@ -209,10 +219,10 @@ pub mod AquaStark {
 
     #[generate_trait]
     impl InternalImpl of InternalTrait {
-        /// Use the default namespace "dojo_starter". This function is handy since the ByteArray
+        /// Use the default namespace "aqua_stark". This function is handy since the ByteArray
         /// can't be const.
         fn world_default(self: @ContractState) -> dojo::world::WorldStorage {
-            self.world(@"dojo_starter")
+            self.world(@"aqua_stark")
         }
     }
 }

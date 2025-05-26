@@ -1,8 +1,8 @@
 use starknet::{ContractAddress};
-use dojo_starter::models::player_model::{Player};
-use dojo_starter::models::aquarium_model::{Aquarium};
-use dojo_starter::models::decoration_model::{Decoration};
-use dojo_starter::models::fish_model::{Fish, Species};
+use aqua_stark::models::player_model::{Player};
+use aqua_stark::models::aquarium_model::{Aquarium};
+use aqua_stark::models::decoration_model::{Decoration};
+use aqua_stark::models::fish_model::{Fish, Species};
 // define the interface
 #[starknet::interface]
 pub trait IAquaStark<T> {
@@ -26,4 +26,6 @@ pub trait IAquaStark<T> {
     fn get_fish(ref self: T, id: u256) -> Fish;
     fn get_aquarium(ref self: T, id: u256) -> Aquarium;
     fn get_decoration(ref self: T, id: u256) -> Decoration;
+    fn add_fish_to_aquarium(ref self: T, fish: Fish, aquarium_id: u256);
+    fn add_decoration_to_aquarium(ref self: T, decoration: Decoration, aquarium_id: u256);
 }

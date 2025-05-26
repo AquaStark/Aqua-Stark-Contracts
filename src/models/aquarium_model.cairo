@@ -32,7 +32,8 @@ pub struct AquariumFishes {
     #[key]
     pub id: u256,
     pub owner: ContractAddress,
-    // pub aquarium: Aquarium,
+    pub current_fish_count: u256,
+    pub max_fish_count: u256,
 }
 
 pub trait AquariumTrait {

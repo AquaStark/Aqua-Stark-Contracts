@@ -1,16 +1,17 @@
 [package]
 cairo-version = "=2.9.2"
-name = "dojo_starter"
+name = "aqua_stark"
 version = "1.2.2"
 edition = "2024_07"
+
 
 [cairo]
 sierra-replace-ids = true
 
 [scripts]
-migrate = "sozo build && sozo migrate"                      # scarb run migrate
-spawn = "sozo execute dojo_starter-actions spawn --wait"    # scarb run spawn
-move = "sozo execute dojo_starter-actions move -c 1 --wait" # scarb run move
+migrate = "./migrate.sh"                      # scarb run migrate
+spawn = "sozo execute aqua_stark-actions spawn --wait"    # scarb run spawn
+move = "sozo execute aqua_stark-actions move -c 1 --wait" # scarb run move
 
 [dependencies]
 dojo = { git = "https://github.com/dojoengine/dojo", tag = "v1.2.2" }
@@ -23,4 +24,8 @@ build-external-contracts = ["dojo::world::world_contract::world"]
 cairo_test = "=2.9.2"
 
 
+
 dojo_cairo_test = { git = "https://github.com/dojoengine/dojo", tag = "v1.2.2" }
+
+
+[profile.sepolia]

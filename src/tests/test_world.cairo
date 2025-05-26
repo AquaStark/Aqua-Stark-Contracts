@@ -7,30 +7,30 @@ mod tests {
         spawn_test_world, NamespaceDef, TestResource, ContractDefTrait, ContractDef,
     };
     use starknet::{testing, get_caller_address, ContractAddress, contract_address_const};
-    use dojo_starter::systems::AquaStark::{AquaStark};
-    use dojo_starter::interfaces::IAquaStark::{
+    use aqua_stark::systems::AquaStark::{AquaStark};
+    use aqua_stark::interfaces::IAquaStark::{
         IAquaStark, IAquaStarkDispatcher, IAquaStarkDispatcherTrait,
     };
 
-    use dojo_starter::models::player_model::{
+    use aqua_stark::models::player_model::{
         Player, m_Player, PlayerCounter, m_PlayerCounter, UsernameToAddress, m_UsernameToAddress,
         AddressToUsername, m_AddressToUsername,
     };
-    use dojo_starter::models::aquarium_model::{
+    use aqua_stark::models::aquarium_model::{
         Aquarium, m_Aquarium, AquariumCounter, m_AquariumCounter, AquariumOwner, m_AquariumOwner,
     };
-    use dojo_starter::models::fish_model::{
+    use aqua_stark::models::fish_model::{
         Fish, m_Fish, FishTrait, FishCounter, m_FishCounter, Species, Pattern, FishOwner,
         m_FishOwner,
     };
-    use dojo_starter::models::decoration_model::{
+    use aqua_stark::models::decoration_model::{
         Decoration, m_Decoration, DecorationCounter, m_DecorationCounter,
     };
 
 
     fn namespace_def() -> NamespaceDef {
         let ndef = NamespaceDef {
-            namespace: "dojo_starter",
+            namespace: "aqua_stark",
             resources: [
                 TestResource::Model(m_Player::TEST_CLASS_HASH),
                 TestResource::Model(m_PlayerCounter::TEST_CLASS_HASH),
@@ -55,8 +55,8 @@ mod tests {
 
     fn contract_defs() -> Span<ContractDef> {
         [
-            ContractDefTrait::new(@"dojo_starter", @"AquaStark")
-                .with_writer_of([dojo::utils::bytearray_hash(@"dojo_starter")].span())
+            ContractDefTrait::new(@"aqua_stark", @"AquaStark")
+                .with_writer_of([dojo::utils::bytearray_hash(@"aqua_stark")].span())
         ]
             .span()
     }
@@ -105,3 +105,4 @@ mod tests {
         assert(player.decoration_count == 1, 'invalid aquarium count');
     }
 }
+

@@ -2,6 +2,14 @@
 version = 1
 
 [[package]]
+name = "aqua_stark"
+version = "1.2.2"
+dependencies = [
+ "dojo",
+ "dojo_cairo_test",
+]
+
+[[package]]
 name = "dojo"
 version = "1.2.2"
 source = "git+https://github.com/dojoengine/dojo?tag=v1.2.2#aafa6669b750cec99aed145640dd6c9a9a946562"
@@ -21,11 +29,3 @@ dependencies = [
 name = "dojo_plugin"
 version = "2.9.2"
 source = "git+https://github.com/dojoengine/dojo?tag=v1.2.2#aafa6669b750cec99aed145640dd6c9a9a946562"
-
-[[package]]
-name = "dojo_starter"
-version = "1.2.2"
-dependencies = [
- "dojo",
- "dojo_cairo_test",
-]

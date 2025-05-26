@@ -16,10 +16,10 @@ telegram = "https://t.me/dojoengine"
 default = "aqua_stark"
 
 [env]
- rpc_url = 'rpc_url = 'https://starknet-sepolia.public.blastapi.io'
- account_address = '0x0620fd15e0b464c174933b5235c72a50376379ee1528719848e144385d0a1ed4'
- private_key = '0x05d67e95f8d5913249452a410db389110c390a36eb0e2ecb092c670ba945b8b9'
- world_address = ''
+# rpc_url =  # STARKNET_RPC_URL
+# account_address = # env: DOJO_ACCOUNT_ADDRESS
+# private_key = # env: DOJO_PRIVATE_KEY
 
 [writers]
 "aqua_stark" = ["aqua_stark-actions"]
+
