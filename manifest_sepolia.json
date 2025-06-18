@@ -1,8 +1,8 @@
 {
   "world": {
-    "class_hash": "0x2660e42e300e85d14619e31ab1c51520a98ecd6ff97accefb40b62b260aeafc",
-    "address": "0x4a8ed1a46118db416888f6b98caf1e4c64bb33a20f89d98cbc59da46856fb7e",
-    "seed": "dojo_starter",
+    "class_hash": "0x4c60dc46a8ca8bb47675b7b914053cef769afbf0e340523187336b72bd71d1f",
+    "address": "0x39742ef7f9576ec90c4741bfca29f9a6f6ced4ade5c018892fc3bb28a1b3e61",
+    "seed": "dojostarter",
     "name": "Dojo starter",
     "entrypoints": [
       "uuid",
@@ -693,6 +693,22 @@
           },
           {
             "type": "function",
+            "name": "owners_count",
+            "inputs": [
+              {
+                "name": "resource",
+                "type": "core::felt252"
+              }
+            ],
+            "outputs": [
+              {
+                "type": "core::integer::u64"
+              }
+            ],
+            "state_mutability": "view"
+          },
+          {
+            "type": "function",
             "name": "is_writer",
             "inputs": [
               {
@@ -1312,12 +1328,12 @@
   },
   "contracts": [
     {
-      "address": "0x76461d50a37c5c6f8167cd14ddc641cb98b4ef608f36f67fdf6748338b2626c",
-      "class_hash": "0x3960b38c19aec8dfa20bac3625b3d63c1553601ec9db43197ed20910019f2a7",
+      "address": "0x1b896a63bf83c38a90e6e2ab34e5cb51a3a80c26e2eeb2b852765d224453f63",
+      "class_hash": "0x744793ddda20989eb09f5c7a8c46daa26b9599ab4914574143cea56358d3888",
       "abi": [
         {
           "type": "impl",
-          "name": "actions__ContractImpl",
+          "name": "AquaStark__ContractImpl",
           "interface_name": "dojo::contract::interface::IContract"
         },
         {
@@ -1327,7 +1343,7 @@
         },
         {
           "type": "impl",
-          "name": "actions__DeployedContractImpl",
+          "name": "AquaStark__DeployedContractImpl",
           "interface_name": "dojo::meta::interface::IDeployedResource"
         },
         {
@@ -1367,49 +1383,512 @@
         },
         {
           "type": "impl",
-          "name": "ActionsImpl",
-          "interface_name": "dojo_starter::systems::actions::IActions"
+          "name": "AquaStarkImpl",
+          "interface_name": "aqua_stark::interfaces::IAquaStark::IAquaStark"
         },
         {
           "type": "enum",
-          "name": "dojo_starter::models::Direction",
+          "name": "aqua_stark::models::fish_model::Species",
           "variants": [
             {
-              "name": "Left",
+              "name": "AngelFish",
               "type": "()"
             },
             {
-              "name": "Right",
+              "name": "GoldFish",
               "type": "()"
             },
             {
-              "name": "Up",
+              "name": "Betta",
               "type": "()"
             },
             {
-              "name": "Down",
+              "name": "NeonTetra",
+              "type": "()"
+            },
+            {
+              "name": "Corydoras",
+              "type": "()"
+            },
+            {
+              "name": "Hybrid",
               "type": "()"
             }
           ]
         },
         {
+          "type": "struct",
+          "name": "core::integer::u256",
+          "members": [
+            {
+              "name": "low",
+              "type": "core::integer::u128"
+            },
+            {
+              "name": "high",
+              "type": "core::integer::u128"
+            }
+          ]
+        },
+        {
+          "type": "struct",
+          "name": "aqua_stark::models::decoration_model::Decoration",
+          "members": [
+            {
+              "name": "id",
+              "type": "core::integer::u256"
+            },
+            {
+              "name": "owner",
+              "type": "core::starknet::contract_address::ContractAddress"
+            },
+            {
+              "name": "aquarium_id",
+              "type": "core::integer::u256"
+            },
+            {
+              "name": "name",
+              "type": "core::felt252"
+            },
+            {
+              "name": "description",
+              "type": "core::felt252"
+            },
+            {
+              "name": "price",
+              "type": "core::integer::u256"
+            },
+            {
+              "name": "rarity",
+              "type": "core::felt252"
+            }
+          ]
+        },
+        {
+          "type": "struct",
+          "name": "aqua_stark::models::aquarium_model::Aquarium",
+          "members": [
+            {
+              "name": "id",
+              "type": "core::integer::u256"
+            },
+            {
+              "name": "owner",
+              "type": "core::starknet::contract_address::ContractAddress"
+            },
+            {
+              "name": "max_capacity",
+              "type": "core::integer::u32"
+            },
+            {
+              "name": "cleanliness",
+              "type": "core::integer::u32"
+            },
+            {
+              "name": "housed_fish",
+              "type": "core::array::Array::<core::integer::u64>"
+            }
+          ]
+        },
+        {
+          "type": "enum",
+          "name": "aqua_stark::models::fish_model::Pattern",
+          "variants": [
+            {
+              "name": "Plain",
+              "type": "()"
+            },
+            {
+              "name": "Spotted",
+              "type": "()"
+            },
+            {
+              "name": "Stripes",
+              "type": "()"
+            }
+          ]
+        },
+        {
+          "type": "enum",
+          "name": "core::bool",
+          "variants": [
+            {
+              "name": "False",
+              "type": "()"
+            },
+            {
+              "name": "True",
+              "type": "()"
+            }
+          ]
+        },
+        {
+          "type": "struct",
+          "name": "aqua_stark::models::fish_model::Fish",
+          "members": [
+            {
+              "name": "id",
+              "type": "core::integer::u256"
+            },
+            {
+              "name": "fish_type",
+              "type": "core::integer::u8"
+            },
+            {
+              "name": "age",
+              "type": "core::integer::u32"
+            },
+            {
+              "name": "hunger_level",
+              "type": "core::integer::u8"
+            },
+            {
+              "name": "health",
+              "type": "core::integer::u8"
+            },
+            {
+              "name": "growth",
+              "type": "core::integer::u64"
+            },
+            {
+              "name": "growth_rate",
+              "type": "core::integer::u8"
+            },
+            {
+              "name": "owner",
+              "type": "core::starknet::contract_address::ContractAddress"
+            },
+            {
+              "name": "species",
+              "type": "aqua_stark::models::fish_model::Species"
+            },
+            {
+              "name": "generation",
+              "type": "core::integer::u8"
+            },
+            {
+              "name": "color",
+              "type": "core::felt252"
+            },
+            {
+              "name": "pattern",
+              "type": "aqua_stark::models::fish_model::Pattern"
+            },
+            {
+              "name": "size",
+              "type": "core::integer::u8"
+            },
+            {
+              "name": "speed",
+              "type": "core::integer::u32"
+            },
+            {
+              "name": "birth_time",
+              "type": "core::integer::u64"
+            },
+            {
+              "name": "parent_ids",
+              "type": "(core::integer::u256, core::integer::u256)"
+            },
+            {
+              "name": "mutation_rate",
+              "type": "core::integer::u8"
+            },
+            {
+              "name": "growth_counter",
+              "type": "core::integer::u8"
+            },
+            {
+              "name": "can_grow",
+              "type": "core::bool"
+            }
+          ]
+        },
+        {
+          "type": "struct",
+          "name": "aqua_stark::models::player_model::Player",
+          "members": [
+            {
+              "name": "wallet",
+              "type": "core::starknet::contract_address::ContractAddress"
+            },
+            {
+              "name": "id",
+              "type": "core::integer::u256"
+            },
+            {
+              "name": "username",
+              "type": "core::felt252"
+            },
+            {
+              "name": "inventory_ref",
+              "type": "core::starknet::contract_address::ContractAddress"
+            },
+            {
+              "name": "is_verified",
+              "type": "core::bool"
+            },
+            {
+              "name": "aquarium_count",
+              "type": "core::integer::u32"
+            },
+            {
+              "name": "fish_count",
+              "type": "core::integer::u32"
+            },
+            {
+              "name": "decoration_count",
+              "type": "core::integer::u32"
+            },
+            {
+              "name": "registered_at",
+              "type": "core::integer::u64"
+            }
+          ]
+        },
+        {
           "type": "interface",
-          "name": "dojo_starter::systems::actions::IActions",
+          "name": "aqua_stark::interfaces::IAquaStark::IAquaStark",
           "items": [
             {
               "type": "function",
-              "name": "spawn",
-              "inputs": [],
+              "name": "get_username_from_address",
+              "inputs": [
+                {
+                  "name": "address",
+                  "type": "core::starknet::contract_address::ContractAddress"
+                }
+              ],
+              "outputs": [
+                {
+                  "type": "core::felt252"
+                }
+              ],
+              "state_mutability": "view"
+            },
+            {
+              "type": "function",
+              "name": "register",
+              "inputs": [
+                {
+                  "name": "username",
+                  "type": "core::felt252"
+                },
+                {
+                  "name": "species",
+                  "type": "aqua_stark::models::fish_model::Species"
+                }
+              ],
               "outputs": [],
               "state_mutability": "external"
             },
             {
               "type": "function",
-              "name": "move",
+              "name": "create_new_player_id",
+              "inputs": [],
+              "outputs": [
+                {
+                  "type": "core::integer::u256"
+                }
+              ],
+              "state_mutability": "external"
+            },
+            {
+              "type": "function",
+              "name": "create_decoration_id",
+              "inputs": [],
+              "outputs": [
+                {
+                  "type": "core::integer::u256"
+                }
+              ],
+              "state_mutability": "external"
+            },
+            {
+              "type": "function",
+              "name": "new_decoration",
               "inputs": [
                 {
-                  "name": "direction",
-                  "type": "dojo_starter::models::Direction"
+                  "name": "aquarium_id",
+                  "type": "core::integer::u256"
+                },
+                {
+                  "name": "name",
+                  "type": "core::felt252"
+                },
+                {
+                  "name": "description",
+                  "type": "core::felt252"
+                },
+                {
+                  "name": "price",
+                  "type": "core::integer::u256"
+                },
+                {
+                  "name": "rarity",
+                  "type": "core::felt252"
+                }
+              ],
+              "outputs": [
+                {
+                  "type": "aqua_stark::models::decoration_model::Decoration"
+                }
+              ],
+              "state_mutability": "external"
+            },
+            {
+              "type": "function",
+              "name": "create_aquarium_id",
+              "inputs": [],
+              "outputs": [
+                {
+                  "type": "core::integer::u256"
+                }
+              ],
+              "state_mutability": "external"
+            },
+            {
+              "type": "function",
+              "name": "create_fish_id",
+              "inputs": [],
+              "outputs": [
+                {
+                  "type": "core::integer::u256"
+                }
+              ],
+              "state_mutability": "external"
+            },
+            {
+              "type": "function",
+              "name": "new_aquarium",
+              "inputs": [
+                {
+                  "name": "owner",
+                  "type": "core::starknet::contract_address::ContractAddress"
+                },
+                {
+                  "name": "max_capacity",
+                  "type": "core::integer::u32"
+                }
+              ],
+              "outputs": [
+                {
+                  "type": "aqua_stark::models::aquarium_model::Aquarium"
+                }
+              ],
+              "state_mutability": "external"
+            },
+            {
+              "type": "function",
+              "name": "new_fish",
+              "inputs": [
+                {
+                  "name": "owner",
+                  "type": "core::starknet::contract_address::ContractAddress"
+                },
+                {
+                  "name": "species",
+                  "type": "aqua_stark::models::fish_model::Species"
+                }
+              ],
+              "outputs": [
+                {
+                  "type": "aqua_stark::models::fish_model::Fish"
+                }
+              ],
+              "state_mutability": "external"
+            },
+            {
+              "type": "function",
+              "name": "get_player",
+              "inputs": [
+                {
+                  "name": "address",
+                  "type": "core::starknet::contract_address::ContractAddress"
+                }
+              ],
+              "outputs": [
+                {
+                  "type": "aqua_stark::models::player_model::Player"
+                }
+              ],
+              "state_mutability": "view"
+            },
+            {
+              "type": "function",
+              "name": "get_fish",
+              "inputs": [
+                {
+                  "name": "id",
+                  "type": "core::integer::u256"
+                }
+              ],
+              "outputs": [
+                {
+                  "type": "aqua_stark::models::fish_model::Fish"
+                }
+              ],
+              "state_mutability": "view"
+            },
+            {
+              "type": "function",
+              "name": "get_aquarium",
+              "inputs": [
+                {
+                  "name": "id",
+                  "type": "core::integer::u256"
+                }
+              ],
+              "outputs": [
+                {
+                  "type": "aqua_stark::models::aquarium_model::Aquarium"
+                }
+              ],
+              "state_mutability": "view"
+            },
+            {
+              "type": "function",
+              "name": "get_decoration",
+              "inputs": [
+                {
+                  "name": "id",
+                  "type": "core::integer::u256"
+                }
+              ],
+              "outputs": [
+                {
+                  "type": "aqua_stark::models::decoration_model::Decoration"
+                }
+              ],
+              "state_mutability": "view"
+            },
+            {
+              "type": "function",
+              "name": "add_fish_to_aquarium",
+              "inputs": [
+                {
+                  "name": "fish",
+                  "type": "aqua_stark::models::fish_model::Fish"
+                },
+                {
+                  "name": "aquarium_id",
+                  "type": "core::integer::u256"
+                }
+              ],
+              "outputs": [],
+              "state_mutability": "external"
+            },
+            {
+              "type": "function",
+              "name": "add_decoration_to_aquarium",
+              "inputs": [
+                {
+                  "name": "decoration",
+                  "type": "aqua_stark::models::decoration_model::Decoration"
+                },
+                {
+                  "name": "aquarium_id",
+                  "type": "core::integer::u256"
                 }
               ],
               "outputs": [],
@@ -1516,7 +1995,7 @@
         },
         {
           "type": "event",
-          "name": "dojo_starter::systems::actions::actions::Event",
+          "name": "aqua_stark::systems::AquaStark::AquaStark::Event",
           "kind": "enum",
           "variants": [
             {
@@ -1533,11 +2012,19 @@
         }
       ],
       "init_calldata": [],
-      "tag": "dojo_starter-actions",
-      "selector": "0x7a1c71029f2d0b38e3ac89b09931d08b6e48417e079c289ff19a8698d0cba33",
+      "tag": "aqua_stark4-AquaStark",
+      "selector": "0x41f30262b4e47ee894bfe22d3acc77ad635cb23a9d4d8aab4099a7299c23846",
       "systems": [
-        "spawn",
-        "move",
+        "register",
+        "create_new_player_id",
+        "create_decoration_id",
+        "new_decoration",
+        "create_aquarium_id",
+        "create_fish_id",
+        "new_aquarium",
+        "new_fish",
+        "add_fish_to_aquarium",
+        "add_decoration_to_aquarium",
         "upgrade"
       ]
     }
@@ -1546,35 +2033,113 @@
   "models": [
     {
       "members": [],
-      "class_hash": "0x46d4db177d7edf355bf1e51fa72023171232b928ef3b9467dbd541611da5f83",
-      "tag": "dojo_starter-DirectionsAvailable",
-      "selector": "0x77844f1facb51e60e546a9832d56c6bd04fa23be4fd5b57290caae5e9a3c1e4"
+      "class_hash": "0x2781eac353f42c39771d39c4f6a2d7533b71b8fada6392c0d3d66f2cbea037c",
+      "tag": "aqua_stark4-AddressToUsername",
+      "selector": "0x11196ad869e7822008cb396ddb2ab8ef3c9a6216e4ac052d88ae168d71512c"
     },
     {
       "members": [],
-      "class_hash": "0x5a3dcd4bf5a0e6fff9ca88dcd77c6b49f1a33a1b9bbea8ce5aa5290e9470070",
-      "tag": "dojo_starter-Moves",
-      "selector": "0x2a29373f1af8348bd366a990eb3a342ef2cbe5e85160539eaca3441a673f468"
+      "class_hash": "0x993f2884fc77981afc589d00a34287dcdf7f272dbf12f5454ac656b2d73788",
+      "tag": "aqua_stark4-Aquarium",
+      "selector": "0x5c30d2c3c939956713a02b1e1c380a11fe2792e1e772214b24aaf8d1fd29ee7"
     },
     {
       "members": [],
-      "class_hash": "0x7231f1cec2b0ba37c39e6d919d35648d07d86a687680aa92ccb0d65fe5af17e",
-      "tag": "dojo_starter-Position",
-      "selector": "0x2ac8b4c190f7031b9fc44312e6b047a1dce0b3f2957c33a935ca7846a46dd5b"
+      "class_hash": "0x39fa6d5d0c365e22604ef6f1c1f18a74522a4c35b1abe6a55dcd52c256514cb",
+      "tag": "aqua_stark4-AquariumCounter",
+      "selector": "0x2dff73a18adce22b1ba9323052b69a37ff3c53f3d8c68d9e62137e1fa21f431"
     },
     {
       "members": [],
-      "class_hash": "0x4518971c1abf10a6c1c40f8f72fc34816dee4752d66f0f2b9d29a62f4fb3310",
-      "tag": "dojo_starter-PositionCount",
-      "selector": "0x44e8e8c3aea54e97e01563cacc08abb4a8ce8c468cd4d3a332bca12bfc2290d"
+      "class_hash": "0x635abc62dc37ad33e27095988d64fd6d671100107b2f31f9156f48c2c9aba7b",
+      "tag": "aqua_stark4-AquariumFishes",
+      "selector": "0x498c3796ebaab82bd90c6799c3bc0cb0532971aa44da8806540d96f1abd0b9a"
+    },
+    {
+      "members": [],
+      "class_hash": "0x3066376a7fca37cbea6eddd26a1a872948583a6be0d0b69c01381b99e4574b4",
+      "tag": "aqua_stark4-AquariumOwner",
+      "selector": "0x660201c213f132e3a3149ead99551882689cf84eb6b91bd52e1344777115edb"
+    },
+    {
+      "members": [],
+      "class_hash": "0x37a9af7f1457f1a97a1310c8b9437bef937872b2ee29aa6c2804834311fa2a7",
+      "tag": "aqua_stark4-Decoration",
+      "selector": "0x548cf5f27515ebfc4ced0b57ac17a3bc4debf7a1ea81c2a9d3fec0fcce8156d"
+    },
+    {
+      "members": [],
+      "class_hash": "0x46cbafef1837a029019a3d819a63311941e82b52ac0bfc8ba35e2bc3d919a19",
+      "tag": "aqua_stark4-DecorationCounter",
+      "selector": "0x7c7e84cfe069ca48424cd85616aa99d6f0e8064259b11ee90fb34d33ddbf4fd"
+    },
+    {
+      "members": [],
+      "class_hash": "0xeec4278407710a65f524ce8d9a48db5c99eff8cfd1d5e1d22736d20583bbbe",
+      "tag": "aqua_stark4-Fish",
+      "selector": "0x2a63350dc7ba4866b5d501db3c72404161651c34b2ef505b1eabee0a28e5d47"
+    },
+    {
+      "members": [],
+      "class_hash": "0x1379e85704fc28bd23cbc33655a5302193b2ab8b5c323aab851320791870490",
+      "tag": "aqua_stark4-FishCounter",
+      "selector": "0x552cefb8e2372db428731d0c8a91de72593f8da7802f8f10f37611c50434db1"
+    },
+    {
+      "members": [],
+      "class_hash": "0x754149ad5a8937691511803fb2d7c02706e45951fb35778cafefad8f09accbc",
+      "tag": "aqua_stark4-FishOwner",
+      "selector": "0x1c5bbccc93b6237a7f10cff7a374e16bdbe234a760a74e71733142d35d88337"
+    },
+    {
+      "members": [],
+      "class_hash": "0x2af48eb5863240ce2c05a8af5e4c07ee667de368da232c8484d6d101879333c",
+      "tag": "aqua_stark4-Game",
+      "selector": "0x69b20d1d0d8b175d703695efb831cb6dea597ee66d96cb222cfe725795cbd12"
+    },
+    {
+      "members": [],
+      "class_hash": "0x1a843e68a9c94010af68e911915e78bef3c342cd56e7cb3aec8fd6f2fd2a611",
+      "tag": "aqua_stark4-GameCounter",
+      "selector": "0x68d8f47eb2331f7f4446e38a65c4e8ea6d0994dd22e370d0dbd23058c21ece5"
+    },
+    {
+      "members": [],
+      "class_hash": "0x46c526d73daffecf9ef9b8d6fcf09a858abfda03400c133dd726db01786eaed",
+      "tag": "aqua_stark4-Player",
+      "selector": "0x3a0729ca73619d3f9e0f6bd25327f936e95286c19edce424f0a9b07611e1ddd"
+    },
+    {
+      "members": [],
+      "class_hash": "0x6dcc2ec20ed4cf1799fb499896bddda8fa95a5d414fb6b3fdc973792f5fdeb0",
+      "tag": "aqua_stark4-PlayerCounter",
+      "selector": "0x4070898203db11770b9884e154718d2feaa0e53dcad7d017fe24027fcd38ba3"
+    },
+    {
+      "members": [],
+      "class_hash": "0x492d71f092ef05cbb7af91238f28797c0e5098b1635cb7d4ee8a478e6935f45",
+      "tag": "aqua_stark4-PlayerFish",
+      "selector": "0xc0e95254e5bd559da5b7fb72a9f5098e8fef67d1696c2f090079e6d36eb85"
+    },
+    {
+      "members": [],
+      "class_hash": "0x18d0abd16066d808add07b9980deef07b84493524bf554a9f2f6e8e5ed7571",
+      "tag": "aqua_stark4-PlayerFishes",
+      "selector": "0x6b1daa51a89e0acf59becf5a847fb0c86063215829fd925ba7cca03cb95f351"
+    },
+    {
+      "members": [],
+      "class_hash": "0x37cefc3199d31397d10fa977e1a6d884bc4fcf2512125500e02604e6a4d8790",
+      "tag": "aqua_stark4-UsernameToAddress",
+      "selector": "0x732b8ecec3c4a8d5c8ba31cd10d010c350567cc71b25daa3a1779f77865d8dc"
     }
   ],
   "events": [
     {
       "members": [],
-      "class_hash": "0x49f539cc331573abc29d729a65824485514906457af4049ff148ffe421520cb",
-      "tag": "dojo_starter-Moved",
-      "selector": "0x504403e5c02b6442527721fc464d9ea5fc8f1ee600ab5ccd5c0845d36fd45f1"
+      "class_hash": "0x40fe0aed12f0aaf469d9df284d26bd9394c2b3d74a3addcd25973aaa99f2869",
+      "tag": "aqua_stark4-PlayerCreated",
+      "selector": "0x1d6cc43e1714e76ad1055201f12420b2218d559aec34307dd39b43e8edaf2b9"
     }
   ],
   "external_contracts": []
