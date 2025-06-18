@@ -54,8 +54,8 @@ mod tests {
 
     fn contract_defs() -> Span<ContractDef> {
         [
-            ContractDefTrait::new(@"aqua_stark", @"AquaStark")
-                .with_writer_of([dojo::utils::bytearray_hash(@"aqua_stark")].span())
+            ContractDefTrait::new(@"aqua_stark5", @"AquaStark")
+                .with_writer_of([dojo::utils::bytearray_hash(@"aqua_stark5")].span())
         ]
             .span()
     }
