@@ -84,7 +84,7 @@ impl AquariumImpl of AquariumTrait {
                 found = true;
             }
             i += 1;
-        }
+        };
 
         if found {
             aquarium.housed_fish = new_fish_array;

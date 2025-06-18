@@ -29,7 +29,7 @@ mod tests {
 
     fn namespace_def() -> NamespaceDef {
         let ndef = NamespaceDef {
-            namespace: "aqua_stark",
+            namespace: "aqua_stark5",
             resources: [
                 TestResource::Model(m_Player::TEST_CLASS_HASH),
                 TestResource::Model(m_PlayerCounter::TEST_CLASS_HASH),

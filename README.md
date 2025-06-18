@@ -75,7 +75,8 @@ You'll get all services logs in the same terminal instance. Whenever you want to
 
 Happy coding!
 
-World  | Contract Address                                                   | Class Hash                                                         
+
+ World  | Contract Address                                                   | Class Hash                                                         
 --------+--------------------------------------------------------------------+--------------------------------------------------------------------
  Synced | 0x039742ef7f9576ec90c4741bfca29f9a6f6ced4ade5c018892fc3bb28a1b3e61 | 0x04c60dc46a8ca8bb47675b7b914053cef769afbf0e340523187336b72bd71d1f 
 
@@ -83,9 +84,9 @@ World  | Contract Address                                                   | Cl
 -------------+--------+--------------------------------------------------------------------
  aqua_stark4 | Synced | 0x05f8fb5acaf6ad456de318ed1c2c1bcd23badff8dd9cd14dd3d914bbd795c697 
 
- Contracts             | Status  | Is Initialized | Dojo Selector                                                      | Contract Address                                                   
------------------------+---------+----------------+--------------------------------------------------------------------+--------------------------------------------------------------------
- aqua_stark4-AquaStark | Updated | true           | 0x041f30262b4e47ee894bfe22d3acc77ad635cb23a9d4d8aab4099a7299c23846 | 0x01b896a63bf83c38a90e6e2ab34e5cb51a3a80c26e2eeb2b852765d224453f63 Contract
+ Contracts             | Status | Is Initialized | Dojo Selector                                                      | Contract Address                                                   
+-----------------------+--------+----------------+--------------------------------------------------------------------+--------------------------------------------------------------------
+ aqua_stark4-AquaStark | Synced | true           | 0x041f30262b4e47ee894bfe22d3acc77ad635cb23a9d4d8aab4099a7299c23846 | 0x01b896a63bf83c38a90e6e2ab34e5cb51a3a80c26e2eeb2b852765d224453f63 
 
  Models                        | Status | Dojo Selector                                                      
 -------------------------------+--------+--------------------------------------------------------------------
