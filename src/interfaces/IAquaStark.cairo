@@ -22,10 +22,10 @@ pub trait IAquaStark<T> {
     fn create_fish_id(ref self: T) -> u256;
     fn new_aquarium(ref self: T, owner: ContractAddress, max_capacity: u32) -> Aquarium;
     fn new_fish(ref self: T, owner: ContractAddress, species: Species) -> Fish;
-    fn get_player(ref self: T, address: ContractAddress) -> Player;
-    fn get_fish(ref self: T, id: u256) -> Fish;
-    fn get_aquarium(ref self: T, id: u256) -> Aquarium;
-    fn get_decoration(ref self: T, id: u256) -> Decoration;
+    fn get_player(self: @T, address: ContractAddress) -> Player;
+    fn get_fish(self: @T, id: u256) -> Fish;
+    fn get_aquarium(self: @T, id: u256) -> Aquarium;
+    fn get_decoration(self: @T, id: u256) -> Decoration;
     fn add_fish_to_aquarium(ref self: T, fish: Fish, aquarium_id: u256);
     fn add_decoration_to_aquarium(ref self: T, decoration: Decoration, aquarium_id: u256);
 }

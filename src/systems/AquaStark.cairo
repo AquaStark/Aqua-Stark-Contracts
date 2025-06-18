@@ -195,22 +195,22 @@ pub mod AquaStark {
         }
 
 
-        fn get_player(ref self: ContractState, address: ContractAddress) -> Player {
+        fn get_player(self: @ContractState, address: ContractAddress) -> Player {
             let mut world = self.world_default();
             let player: Player = world.read_model(address);
             player
         }
-        fn get_fish(ref self: ContractState, id: u256) -> Fish {
+        fn get_fish(self: @ContractState, id: u256) -> Fish {
             let mut world = self.world_default();
             let fish: Fish = world.read_model(id);
             fish
         }
-        fn get_aquarium(ref self: ContractState, id: u256) -> Aquarium {
+        fn get_aquarium(self: @ContractState, id: u256) -> Aquarium {
             let mut world = self.world_default();
             let aquarium: Aquarium = world.read_model(id);
             aquarium
         }
-        fn get_decoration(ref self: ContractState, id: u256) -> Decoration {
+        fn get_decoration(self: @ContractState, id: u256) -> Decoration {
             let mut world = self.world_default();
             let decoration: Decoration = world.read_model(id);
             decoration
