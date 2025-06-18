@@ -85,7 +85,7 @@ World  | Contract Address                                                   | Cl
 
  Contracts             | Status  | Is Initialized | Dojo Selector                                                      | Contract Address                                                   
 -----------------------+---------+----------------+--------------------------------------------------------------------+--------------------------------------------------------------------
- aqua_stark4-AquaStark | Updated | true           | 0x041f30262b4e47ee894bfe22d3acc77ad635cb23a9d4d8aab4099a7299c23846 | 0x01b896a63bf83c38a90e6e2ab34e5cb51a3a80c26e2eeb2b852765d224453f63 
+ aqua_stark4-AquaStark | Updated | true           | 0x041f30262b4e47ee894bfe22d3acc77ad635cb23a9d4d8aab4099a7299c23846 | 0x01b896a63bf83c38a90e6e2ab34e5cb51a3a80c26e2eeb2b852765d224453f63 Contract
 
  Models                        | Status | Dojo Selector                                                      
 -------------------------------+--------+--------------------------------------------------------------------

@@ -1,8 +1,8 @@
-use starknet::{ContractAddress};
-use aqua_stark::models::player_model::{Player};
-use aqua_stark::models::aquarium_model::{Aquarium};
-use aqua_stark::models::decoration_model::{Decoration};
+use aqua_stark::models::aquarium_model::Aquarium;
+use aqua_stark::models::decoration_model::Decoration;
 use aqua_stark::models::fish_model::{Fish, Species};
+use aqua_stark::models::player_model::Player;
+use starknet::ContractAddress;
 // define the interface
 #[starknet::interface]
 pub trait IAquaStark<T> {
@@ -29,7 +29,6 @@ pub trait IAquaStark<T> {
     fn add_fish_to_aquarium(ref self: T, fish: Fish, aquarium_id: u256);
     fn add_decoration_to_aquarium(ref self: T, decoration: Decoration, aquarium_id: u256);
 }
-
 // curl --location 'https://api.cartridge.gg/x/starknet/sepolia' \
 // --header 'Content-Type: application/json' \
 // --data '{"id": 0,"jsonrpc": "2.0","method": "starknet_chainId","params": {}}'
@@ -37,8 +36,9 @@ pub trait IAquaStark<T> {
 // # you should get an output like this...
 // {"jsonrpc":"2.0","result":"0x534e5f5345504f4c4941","id":0}
 
-// # now paste the hex result part on this command... 
+// # now paste the hex result part on this command...
 // echo 0x534e5f5345504f4c4941 | xxd -r -p
 
 // # which !must! output SN_SEPOLIA or SN_MAIN
 // SN_SEPOLIA
+

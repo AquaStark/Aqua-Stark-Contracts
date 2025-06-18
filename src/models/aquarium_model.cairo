@@ -84,7 +84,7 @@ impl AquariumImpl of AquariumTrait {
                 found = true;
             }
             i += 1;
-        };
+        }
 
         if found {
             aquarium.housed_fish = new_fish_array;
@@ -139,10 +139,9 @@ impl AquariumImpl of AquariumTrait {
 }
 #[cfg(test)]
 mod tests {
-    use super::Aquarium;
-    use super::*;
-    use starknet::contract_address_const;
     use core::array::ArrayTrait;
+    use starknet::contract_address_const;
+    use super::{*, Aquarium};
 
     fn zero_address() -> ContractAddress {
         contract_address_const::<0>()

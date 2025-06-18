@@ -1,6 +1,6 @@
-use starknet::{ContractAddress, get_block_timestamp, get_caller_address, contract_address_const};
-use crate::models::aquarium_model::{Aquarium};
-use crate::models::fish_model::{Fish};
+use starknet::{ContractAddress, contract_address_const, get_block_timestamp, get_caller_address};
+use crate::models::aquarium_model::Aquarium;
+use crate::models::fish_model::Fish;
 
 
 #[derive(Serde, Copy, Drop, Introspect, PartialEq)]
@@ -135,9 +135,8 @@ impl PlayerImpl of PlayerTrait {
 
 #[cfg(test)]
 mod tests {
-    use super::Player;
-    use super::*;
     use starknet::{contract_address_const, get_block_timestamp};
+    use super::{*, Player};
 
     fn zero_address() -> ContractAddress {
         contract_address_const::<0>()

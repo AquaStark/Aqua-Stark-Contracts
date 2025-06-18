@@ -58,8 +58,7 @@ impl DecorationImpl of DecorationTrait {
 }
 #[cfg(test)]
 mod tests {
-    use super::Decoration;
-    use super::*;
+    use super::{*, Decoration};
     #[test]
     fn test_create_decoration() {
         let caller = get_caller_address();

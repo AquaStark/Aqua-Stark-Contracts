@@ -1,19 +1,18 @@
 // dojo decorator
 #[dojo::contract]
 pub mod AquaStark {
-    use aqua_stark::interfaces::IAquaStark::{IAquaStark};
-    use starknet::{
-        ContractAddress, get_caller_address, get_block_timestamp, contract_address_const,
-    };
-    use aqua_stark::models::player_model::{
-        Player, PlayerTrait, PlayerCounter, UsernameToAddress, AddressToUsername,
-    };
+    use aqua_stark::interfaces::IAquaStark::IAquaStark;
     use aqua_stark::models::aquarium_model::{Aquarium, AquariumCounter, AquariumOwner};
     use aqua_stark::models::decoration_model::{Decoration, DecorationCounter, DecorationTrait};
-    use aqua_stark::models::fish_model::{Fish, FishCounter, Species, FishTrait, FishOwner};
-
-    use dojo::model::{ModelStorage};
+    use aqua_stark::models::fish_model::{Fish, FishCounter, FishOwner, FishTrait, Species};
+    use aqua_stark::models::player_model::{
+        AddressToUsername, Player, PlayerCounter, PlayerTrait, UsernameToAddress,
+    };
     use dojo::event::EventStorage;
+    use dojo::model::ModelStorage;
+    use starknet::{
+        ContractAddress, contract_address_const, get_block_timestamp, get_caller_address,
+    };
 
     #[derive(Copy, Drop, Serde)]
     #[dojo::event]

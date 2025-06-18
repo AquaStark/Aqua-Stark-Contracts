@@ -158,8 +158,8 @@ impl ExperienceInternalImpl of ExperienceTrait {
 
 #[cfg(test)]
 mod tests {
-    use super::*;
     use starknet::contract_address_const;
+    use super::*;
 
     #[test]
     fn test_grant_experience() {
