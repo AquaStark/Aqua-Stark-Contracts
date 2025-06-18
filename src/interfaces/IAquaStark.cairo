@@ -30,4 +30,3 @@ pub trait IAquaStark<T> {
     fn add_decoration_to_aquarium(ref self: T, decoration: Decoration, aquarium_id: u256);
 }
 
-
