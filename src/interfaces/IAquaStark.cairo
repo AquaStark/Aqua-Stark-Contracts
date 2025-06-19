@@ -7,7 +7,7 @@ use starknet::ContractAddress;
 #[starknet::interface]
 pub trait IAquaStark<T> {
     fn get_username_from_address(self: @T, address: ContractAddress) -> felt252;
-    fn register(ref self: T, username: felt252, species: Species);
+    fn register(ref self: T, username: felt252);
     fn create_new_player_id(ref self: T) -> u256;
     fn create_decoration_id(ref self: T) -> u256;
     fn new_decoration(

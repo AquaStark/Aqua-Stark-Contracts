@@ -29,7 +29,7 @@ mod tests {
 
     fn namespace_def() -> NamespaceDef {
         let ndef = NamespaceDef {
-            namespace: "aqua_stark5",
+            namespace: "aqua_stark6",
             resources: [
                 TestResource::Model(m_Player::TEST_CLASS_HASH),
                 TestResource::Model(m_PlayerCounter::TEST_CLASS_HASH),
@@ -54,8 +54,8 @@ mod tests {
 
     fn contract_defs() -> Span<ContractDef> {
         [
-            ContractDefTrait::new(@"aqua_stark5", @"AquaStark")
-                .with_writer_of([dojo::utils::bytearray_hash(@"aqua_stark5")].span())
+            ContractDefTrait::new(@"aqua_stark6", @"AquaStark")
+                .with_writer_of([dojo::utils::bytearray_hash(@"aqua_stark6")].span())
         ]
             .span()
     }
@@ -86,7 +86,7 @@ mod tests {
         let actions_system = IAquaStarkDispatcher { contract_address };
 
         testing::set_contract_address(caller_1);
-        actions_system.register(username, Species::Betta);
+        actions_system.register(username);
 
         let player = actions_system.get_player(caller_1);
         let fish = actions_system.get_fish(1);

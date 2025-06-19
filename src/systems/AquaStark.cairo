@@ -140,7 +140,7 @@ pub mod AquaStark {
             fish
         }
 
-        fn register(ref self: ContractState, username: felt252, species: Species) {
+        fn register(ref self: ContractState, username: felt252) {
             let mut world = self.world_default();
             let caller = get_caller_address();
 
@@ -175,7 +175,7 @@ pub mod AquaStark {
             let aquarium = self.new_aquarium(caller, 10);
             new_player.aquarium_count += 1;
 
-            self.new_fish(caller, species);
+            self.new_fish(caller, Species::GoldFish);
             new_player.fish_count += 1;
 
             self.new_decoration(aquarium.id, 'Pebbles', 'Shiny rocks', 0, 0);
@@ -222,7 +222,7 @@ pub mod AquaStark {
         /// Use the default namespace "aqua_stark". This function is handy since the ByteArray
         /// can't be const.
         fn world_default(self: @ContractState) -> dojo::world::WorldStorage {
-            self.world(@"aqua_stark5")
+            self.world(@"aqua_stark6")
         }
     }
 }

@@ -1,8 +1,8 @@
 {
   "world": {
     "class_hash": "0x4c60dc46a8ca8bb47675b7b914053cef769afbf0e340523187336b72bd71d1f",
-    "address": "0x39742ef7f9576ec90c4741bfca29f9a6f6ced4ade5c018892fc3bb28a1b3e61",
-    "seed": "dojostarter",
+    "address": "0x37a99da65fb03c5692317efddfeb0ed67dba643ce34e6ccd1179a1894dc5f83",
+    "seed": "dojostarter1",
     "name": "Dojo starter",
     "entrypoints": [
       "uuid",
@@ -1328,8 +1328,8 @@
   },
   "contracts": [
     {
-      "address": "0x1b896a63bf83c38a90e6e2ab34e5cb51a3a80c26e2eeb2b852765d224453f63",
-      "class_hash": "0x74c3b6ea311c6e12c4f13b2ba7f00e51cb74ca5d21d954f34f46fd758ce5d6d",
+      "address": "0x2434f4936e0659641019359af6803cdd0568c76e3215ce0fa83013f23c779f5",
+      "class_hash": "0x633ecbab50db1db54b332d1c4950da9129cedda1e532edf80b6f8c3b0485e63",
       "abi": [
         {
           "type": "impl",
@@ -1385,36 +1385,6 @@
           "type": "impl",
           "name": "AquaStarkImpl",
           "interface_name": "aqua_stark::interfaces::IAquaStark::IAquaStark"
-        },
-        {
-          "type": "enum",
-          "name": "aqua_stark::models::fish_model::Species",
-          "variants": [
-            {
-              "name": "AngelFish",
-              "type": "()"
-            },
-            {
-              "name": "GoldFish",
-              "type": "()"
-            },
-            {
-              "name": "Betta",
-              "type": "()"
-            },
-            {
-              "name": "NeonTetra",
-              "type": "()"
-            },
-            {
-              "name": "Corydoras",
-              "type": "()"
-            },
-            {
-              "name": "Hybrid",
-              "type": "()"
-            }
-          ]
         },
         {
           "type": "struct",
@@ -1487,6 +1457,36 @@
             {
               "name": "housed_fish",
               "type": "core::array::Array::<core::integer::u64>"
+            }
+          ]
+        },
+        {
+          "type": "enum",
+          "name": "aqua_stark::models::fish_model::Species",
+          "variants": [
+            {
+              "name": "AngelFish",
+              "type": "()"
+            },
+            {
+              "name": "GoldFish",
+              "type": "()"
+            },
+            {
+              "name": "Betta",
+              "type": "()"
+            },
+            {
+              "name": "NeonTetra",
+              "type": "()"
+            },
+            {
+              "name": "Corydoras",
+              "type": "()"
+            },
+            {
+              "name": "Hybrid",
+              "type": "()"
             }
           ]
         },
@@ -1673,10 +1673,6 @@
                 {
                   "name": "username",
                   "type": "core::felt252"
-                },
-                {
-                  "name": "species",
-                  "type": "aqua_stark::models::fish_model::Species"
                 }
               ],
               "outputs": [],
@@ -2012,8 +2008,8 @@
         }
       ],
       "init_calldata": [],
-      "tag": "aqua_stark4-AquaStark",
-      "selector": "0x41f30262b4e47ee894bfe22d3acc77ad635cb23a9d4d8aab4099a7299c23846",
+      "tag": "aqua_stark6-AquaStark",
+      "selector": "0x71eeb5c29a4c9ddef2c430334d96fe6514d6b470160617ce35b96153dd9b91c",
       "systems": [
         "register",
         "create_new_player_id",
@@ -2034,112 +2030,112 @@
     {
       "members": [],
       "class_hash": "0x2781eac353f42c39771d39c4f6a2d7533b71b8fada6392c0d3d66f2cbea037c",
-      "tag": "aqua_stark4-AddressToUsername",
-      "selector": "0x11196ad869e7822008cb396ddb2ab8ef3c9a6216e4ac052d88ae168d71512c"
+      "tag": "aqua_stark6-AddressToUsername",
+      "selector": "0x4019d518bfe4a2887bbdfee99f4ee8ba5e12dbc3fac7fcd3c9036df9244dcff"
     },
     {
       "members": [],
       "class_hash": "0x993f2884fc77981afc589d00a34287dcdf7f272dbf12f5454ac656b2d73788",
-      "tag": "aqua_stark4-Aquarium",
-      "selector": "0x5c30d2c3c939956713a02b1e1c380a11fe2792e1e772214b24aaf8d1fd29ee7"
+      "tag": "aqua_stark6-Aquarium",
+      "selector": "0x3be2a814a0d8ad7bd7696ec4ed232ad3c46f505a95c5eff10e7766c9cf1e1e1"
     },
     {
       "members": [],
       "class_hash": "0x39fa6d5d0c365e22604ef6f1c1f18a74522a4c35b1abe6a55dcd52c256514cb",
-      "tag": "aqua_stark4-AquariumCounter",
-      "selector": "0x2dff73a18adce22b1ba9323052b69a37ff3c53f3d8c68d9e62137e1fa21f431"
+      "tag": "aqua_stark6-AquariumCounter",
+      "selector": "0x50f369bf8c4b97e938246e4a98792efc2f1f0f194231c12ff89ce3e67fe37c3"
     },
     {
       "members": [],
       "class_hash": "0x635abc62dc37ad33e27095988d64fd6d671100107b2f31f9156f48c2c9aba7b",
-      "tag": "aqua_stark4-AquariumFishes",
-      "selector": "0x498c3796ebaab82bd90c6799c3bc0cb0532971aa44da8806540d96f1abd0b9a"
+      "tag": "aqua_stark6-AquariumFishes",
+      "selector": "0x21cf51ead59b7eb4e1fefba3b8e335f4a8c5fe636d10ce9a616ff1292f87c44"
     },
     {
       "members": [],
       "class_hash": "0x3066376a7fca37cbea6eddd26a1a872948583a6be0d0b69c01381b99e4574b4",
-      "tag": "aqua_stark4-AquariumOwner",
-      "selector": "0x660201c213f132e3a3149ead99551882689cf84eb6b91bd52e1344777115edb"
+      "tag": "aqua_stark6-AquariumOwner",
+      "selector": "0x323890a857f4643246188edb68acb9583d7de6cb26af761ece51d49ce3b1c33"
     },
     {
       "members": [],
       "class_hash": "0x37a9af7f1457f1a97a1310c8b9437bef937872b2ee29aa6c2804834311fa2a7",
-      "tag": "aqua_stark4-Decoration",
-      "selector": "0x548cf5f27515ebfc4ced0b57ac17a3bc4debf7a1ea81c2a9d3fec0fcce8156d"
+      "tag": "aqua_stark6-Decoration",
+      "selector": "0x57d0d33bf2b46fcdec1ed7821fcac95283498a6ce220bb3edc460a54f5ef08"
     },
     {
       "members": [],
       "class_hash": "0x46cbafef1837a029019a3d819a63311941e82b52ac0bfc8ba35e2bc3d919a19",
-      "tag": "aqua_stark4-DecorationCounter",
-      "selector": "0x7c7e84cfe069ca48424cd85616aa99d6f0e8064259b11ee90fb34d33ddbf4fd"
+      "tag": "aqua_stark6-DecorationCounter",
+      "selector": "0x6185654d3200142bf759c0fc147e12df26121f0f1eed2d2d4c942d3e7228b6f"
     },
     {
       "members": [],
       "class_hash": "0xeec4278407710a65f524ce8d9a48db5c99eff8cfd1d5e1d22736d20583bbbe",
-      "tag": "aqua_stark4-Fish",
-      "selector": "0x2a63350dc7ba4866b5d501db3c72404161651c34b2ef505b1eabee0a28e5d47"
+      "tag": "aqua_stark6-Fish",
+      "selector": "0x697e9497f3aded3528dcab53686712ffd2c989af084f4c2db3f0f0876aaebb7"
     },
     {
       "members": [],
       "class_hash": "0x1379e85704fc28bd23cbc33655a5302193b2ab8b5c323aab851320791870490",
-      "tag": "aqua_stark4-FishCounter",
-      "selector": "0x552cefb8e2372db428731d0c8a91de72593f8da7802f8f10f37611c50434db1"
+      "tag": "aqua_stark6-FishCounter",
+      "selector": "0x5b8437a44e288aea2d9bb2e0e9c8ea62a8562937d035201d1975e6c01972f1c"
     },
     {
       "members": [],
       "class_hash": "0x754149ad5a8937691511803fb2d7c02706e45951fb35778cafefad8f09accbc",
-      "tag": "aqua_stark4-FishOwner",
-      "selector": "0x1c5bbccc93b6237a7f10cff7a374e16bdbe234a760a74e71733142d35d88337"
+      "tag": "aqua_stark6-FishOwner",
+      "selector": "0x5a9b680496ef3e7b1fc172e13b2797c1fd5a59b5de285fe8f9bcce2279db3f3"
     },
     {
       "members": [],
       "class_hash": "0x2af48eb5863240ce2c05a8af5e4c07ee667de368da232c8484d6d101879333c",
-      "tag": "aqua_stark4-Game",
-      "selector": "0x69b20d1d0d8b175d703695efb831cb6dea597ee66d96cb222cfe725795cbd12"
+      "tag": "aqua_stark6-Game",
+      "selector": "0x799140b7b5b7c98d3585488ec18dbe6a4eb3013fa3c931ef69e75f1d13bd552"
     },
     {
       "members": [],
       "class_hash": "0x1a843e68a9c94010af68e911915e78bef3c342cd56e7cb3aec8fd6f2fd2a611",
-      "tag": "aqua_stark4-GameCounter",
-      "selector": "0x68d8f47eb2331f7f4446e38a65c4e8ea6d0994dd22e370d0dbd23058c21ece5"
+      "tag": "aqua_stark6-GameCounter",
+      "selector": "0x6aa44ea4dd4d0618fae74dfdc3d6bebdcf47e4bea1dae0d12491fbede09ef5a"
     },
     {
       "members": [],
       "class_hash": "0x46c526d73daffecf9ef9b8d6fcf09a858abfda03400c133dd726db01786eaed",
-      "tag": "aqua_stark4-Player",
-      "selector": "0x3a0729ca73619d3f9e0f6bd25327f936e95286c19edce424f0a9b07611e1ddd"
+      "tag": "aqua_stark6-Player",
+      "selector": "0x499adc54a727de06fbdd0e3c981e76d8a6a75638025901b25ccae3632dc734c"
     },
     {
       "members": [],
       "class_hash": "0x6dcc2ec20ed4cf1799fb499896bddda8fa95a5d414fb6b3fdc973792f5fdeb0",
-      "tag": "aqua_stark4-PlayerCounter",
-      "selector": "0x4070898203db11770b9884e154718d2feaa0e53dcad7d017fe24027fcd38ba3"
+      "tag": "aqua_stark6-PlayerCounter",
+      "selector": "0x18f24e26e86de490d8b918d2a224d2e6ee20389c9992ddf979b607cb6bc3f60"
     },
     {
       "members": [],
       "class_hash": "0x492d71f092ef05cbb7af91238f28797c0e5098b1635cb7d4ee8a478e6935f45",
-      "tag": "aqua_stark4-PlayerFish",
-      "selector": "0xc0e95254e5bd559da5b7fb72a9f5098e8fef67d1696c2f090079e6d36eb85"
+      "tag": "aqua_stark6-PlayerFish",
+      "selector": "0x357bcd01ccadb4df9abb8fde452eeffc28e264098e26ea07a4540b899c6dab5"
     },
     {
       "members": [],
       "class_hash": "0x18d0abd16066d808add07b9980deef07b84493524bf554a9f2f6e8e5ed7571",
-      "tag": "aqua_stark4-PlayerFishes",
-      "selector": "0x6b1daa51a89e0acf59becf5a847fb0c86063215829fd925ba7cca03cb95f351"
+      "tag": "aqua_stark6-PlayerFishes",
+      "selector": "0x7c72ef37447a82717e9902160d9bfcedf8dcfc3a68959efce0d8d94a513b5f1"
     },
     {
       "members": [],
       "class_hash": "0x37cefc3199d31397d10fa977e1a6d884bc4fcf2512125500e02604e6a4d8790",
-      "tag": "aqua_stark4-UsernameToAddress",
-      "selector": "0x732b8ecec3c4a8d5c8ba31cd10d010c350567cc71b25daa3a1779f77865d8dc"
+      "tag": "aqua_stark6-UsernameToAddress",
+      "selector": "0xae0040ac6672b0bf576ff85d104a342cf4bfb0887d5b7100e9df17482db5e"
     }
   ],
   "events": [
     {
       "members": [],
       "class_hash": "0x40fe0aed12f0aaf469d9df284d26bd9394c2b3d74a3addcd25973aaa99f2869",
-      "tag": "aqua_stark4-PlayerCreated",
-      "selector": "0x1d6cc43e1714e76ad1055201f12420b2218d559aec34307dd39b43e8edaf2b9"
+      "tag": "aqua_stark6-PlayerCreated",
+      "selector": "0x569a053aeb4659e36a554f17b798d7f2da25b3ad03fd9d355496c093f4072cd"
     }
   ],
   "external_contracts": []
