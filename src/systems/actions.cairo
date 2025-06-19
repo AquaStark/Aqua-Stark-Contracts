@@ -222,7 +222,7 @@ pub mod AquaStark {
         /// Use the default namespace "aqua_stark". This function is handy since the ByteArray
         /// can't be const.
         fn world_default(self: @ContractState) -> dojo::world::WorldStorage {
-            self.world(@"aqua_stark6")
+            self.world(@"aqua_stark")
         }
     }
 }

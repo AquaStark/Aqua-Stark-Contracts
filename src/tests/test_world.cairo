@@ -17,7 +17,7 @@ mod tests {
         AddressToUsername, Player, PlayerCounter, UsernameToAddress, m_AddressToUsername, m_Player,
         m_PlayerCounter, m_UsernameToAddress,
     };
-    use aqua_stark::systems::AquaStark::AquaStark;
+    use aqua_stark::systems::actions::AquaStark;
     use dojo::model::{ModelStorage, ModelStorageTest};
     use dojo::world::WorldStorageTrait;
     use dojo_cairo_test::{

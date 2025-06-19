@@ -74,39 +74,40 @@ You'll get all services logs in the same terminal instance. Whenever you want to
     - It can't get better then this, your pull request will be appreciated by the community.
 
 Happy coding!
+ sozo inspect
 
  World  | Contract Address                                                   | Class Hash                                                         
 --------+--------------------------------------------------------------------+--------------------------------------------------------------------
- Synced | 0x037a99da65fb03c5692317efddfeb0ed67dba643ce34e6ccd1179a1894dc5f83 | 0x04c60dc46a8ca8bb47675b7b914053cef769afbf0e340523187336b72bd71d1f 
+ Synced | 0x02239f77d69e7782b73516b1e0f8ab58fbb50d4f75efa47d5bd0e83781dc1363 | 0x04c60dc46a8ca8bb47675b7b914053cef769afbf0e340523187336b72bd71d1f 
 
- Namespaces  | Status | Dojo Selector                                                      
--------------+--------+--------------------------------------------------------------------
- aqua_stark6 | Synced | 0x0152e3c2027de37ace726013f2ed3a0fcbbbd87310e01aafe08d7c1bd633f3df 
+ Namespaces | Status | Dojo Selector                                                      
+------------+--------+--------------------------------------------------------------------
+ aqua_stark | Synced | 0x03e818a8be3e6f0bb01b1d02706592d8b20c6dd961b9168f45accb614f8c3340 
 
- Contracts             | Status | Is Initialized | Dojo Selector                                                      | Contract Address                                                   
------------------------+--------+----------------+--------------------------------------------------------------------+--------------------------------------------------------------------
- aqua_stark6-AquaStark | Synced | true           | 0x071eeb5c29a4c9ddef2c430334d96fe6514d6b470160617ce35b96153dd9b91c | 0x02434f4936e0659641019359af6803cdd0568c76e3215ce0fa83013f23c779f5 
+ Contracts            | Status  | Is Initialized | Dojo Selector                                                      | Contract Address                                                   
+----------------------+---------+----------------+--------------------------------------------------------------------+--------------------------------------------------------------------
+ aqua_stark-AquaStark | Updated | true           | 0x036b88338009ecd825c9f2a8c7f36bcbf735885189870d6ac01d8349d9a4bb5f | 0x04147e44d80522ad0b28818f1f6111ff89f1d09208f121d65cc62bfb8980cf5d 
 
- Models                        | Status | Dojo Selector                                                      
--------------------------------+--------+--------------------------------------------------------------------
- aqua_stark6-AddressToUsername | Synced | 0x04019d518bfe4a2887bbdfee99f4ee8ba5e12dbc3fac7fcd3c9036df9244dcff 
- aqua_stark6-Aquarium          | Synced | 0x03be2a814a0d8ad7bd7696ec4ed232ad3c46f505a95c5eff10e7766c9cf1e1e1 
- aqua_stark6-AquariumCounter   | Synced | 0x050f369bf8c4b97e938246e4a98792efc2f1f0f194231c12ff89ce3e67fe37c3 
- aqua_stark6-AquariumFishes    | Synced | 0x021cf51ead59b7eb4e1fefba3b8e335f4a8c5fe636d10ce9a616ff1292f87c44 
- aqua_stark6-AquariumOwner     | Synced | 0x0323890a857f4643246188edb68acb9583d7de6cb26af761ece51d49ce3b1c33 
- aqua_stark6-Decoration        | Synced | 0x0057d0d33bf2b46fcdec1ed7821fcac95283498a6ce220bb3edc460a54f5ef08 
- aqua_stark6-DecorationCounter | Synced | 0x06185654d3200142bf759c0fc147e12df26121f0f1eed2d2d4c942d3e7228b6f 
- aqua_stark6-Fish              | Synced | 0x0697e9497f3aded3528dcab53686712ffd2c989af084f4c2db3f0f0876aaebb7 
- aqua_stark6-FishCounter       | Synced | 0x05b8437a44e288aea2d9bb2e0e9c8ea62a8562937d035201d1975e6c01972f1c 
- aqua_stark6-FishOwner         | Synced | 0x05a9b680496ef3e7b1fc172e13b2797c1fd5a59b5de285fe8f9bcce2279db3f3 
- aqua_stark6-Game              | Synced | 0x0799140b7b5b7c98d3585488ec18dbe6a4eb3013fa3c931ef69e75f1d13bd552 
- aqua_stark6-GameCounter       | Synced | 0x06aa44ea4dd4d0618fae74dfdc3d6bebdcf47e4bea1dae0d12491fbede09ef5a 
- aqua_stark6-Player            | Synced | 0x0499adc54a727de06fbdd0e3c981e76d8a6a75638025901b25ccae3632dc734c 
- aqua_stark6-PlayerCounter     | Synced | 0x018f24e26e86de490d8b918d2a224d2e6ee20389c9992ddf979b607cb6bc3f60 
- aqua_stark6-PlayerFish        | Synced | 0x0357bcd01ccadb4df9abb8fde452eeffc28e264098e26ea07a4540b899c6dab5 
- aqua_stark6-PlayerFishes      | Synced | 0x07c72ef37447a82717e9902160d9bfcedf8dcfc3a68959efce0d8d94a513b5f1 
- aqua_stark6-UsernameToAddress | Synced | 0x000ae0040ac6672b0bf576ff85d104a342cf4bfb0887d5b7100e9df17482db5e 
+ Models                       | Status | Dojo Selector                                                      
+------------------------------+--------+--------------------------------------------------------------------
+ aqua_stark-AddressToUsername | Synced | 0x053ad6091f98fe421f4f6302f31dca2defcad06af005e68c4af5ad4a5c014672 
+ aqua_stark-Aquarium          | Synced | 0x064c100659522d67b94111a0acc4fff370c80f8179e8b05c41bc6879f4b44e50 
+ aqua_stark-AquariumCounter   | Synced | 0x066a6230ce132addfd543a8bbe8a492f6ceb84c56dded927d7df7a2e466b7b63 
+ aqua_stark-AquariumFishes    | Synced | 0x012b499331b8efa024c82e896e4b265cd1b000858dd63f23c5540b704dd3dff2 
+ aqua_stark-AquariumOwner     | Synced | 0x0761e55934d223f075b4b338a1dbbbc56540fbd576ffb7444b151515f4344549 
+ aqua_stark-Decoration        | Synced | 0x013a68e0856ac44917c26ad12ea9c059e1a1221022c840421805f5492e442428 
+ aqua_stark-DecorationCounter | Synced | 0x0254385a282ac12317e34eba4b5fbdef09a9a58110d865c40cdb2a7af911553b 
+ aqua_stark-Fish              | Synced | 0x002c29d0c1c419653118b00904822377170068e57e95aea2c09d5141ec49d2d3 
+ aqua_stark-FishCounter       | Synced | 0x052f89e44e4688401f1af4ca36b41deb2e61d1d29d9013c8b6f791a1d4da6afb 
+ aqua_stark-FishOwner         | Synced | 0x06ed6304ac31d4bf7cd91f08eeb03d2a1691623f7a0b0628a241ec9a6a450b5f 
+ aqua_stark-Game              | Synced | 0x066568178a05f2e1dbb927e95281f79d5bd1bda813f91611e92c3c7c0d758b0e 
+ aqua_stark-GameCounter       | Synced | 0x0339374683057a56fdc87f3c2abb78175c1526f426b32d5332f854674743c874 
+ aqua_stark-Player            | Synced | 0x061631ef100cb1050a69e40da1e089ee05a7c74a56e124bbf79c75f27b7d8f98 
+ aqua_stark-PlayerCounter     | Synced | 0x02a92dc64be1f6980f79c5b2b3b150b2ee84299811cc2173a9f1f5d35872aa7c 
+ aqua_stark-PlayerFish        | Synced | 0x065cb63951e7a779f56da9417ab123172d208c96f0e3c4db5ef817858d072032 
+ aqua_stark-PlayerFishes      | Synced | 0x01b656e13a4cd136ac38fa7d898060e4def0d5c95cee677be97cac92b4b99237 
+ aqua_stark-UsernameToAddress | Synced | 0x05a9aa8105f956596eaf34ace50b49fc0c6a7f69f686bad9c4704be991a4eb9d 
 
- Events                    | Status | Dojo Selector                                                      
----------------------------+--------+--------------------------------------------------------------------
- aqua_stark6-PlayerCreated | Synced | 0x0569a053aeb4659e36a554f17b798d7f2da25b3ad03fd9d355496c093f4072cd 
+ Events                   | Status  | Dojo Selector                                                      
+--------------------------+---------+--------------------------------------------------------------------
+ aqua_stark-PlayerCreated | Updated | 0x06e38919b864f246a83eca36b4584f5f1206e54037ca0234793b4791cdb6ca79 
