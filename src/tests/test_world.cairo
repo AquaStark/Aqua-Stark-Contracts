@@ -87,6 +87,7 @@ mod tests {
 
         testing::set_contract_address(caller_1);
         actions_system.register(username);
+        actions_system.new_fish(caller_1, Species::GoldFish);
 
         let player = actions_system.get_player(caller_1);
         let fish = actions_system.get_fish(1);

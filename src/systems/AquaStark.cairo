@@ -85,6 +85,10 @@ pub mod AquaStark {
             let mut aquarium_owner: AquariumOwner = world.read_model(aquarium_id);
             aquarium_owner.owner = caller;
 
+            let mut player: Player = world.read_model(caller);
+            player.aquarium_count += 1;
+            world.write_model(@player);
+
             world.write_model(@aquarium_owner);
             world.write_model(@aquarium);
 
@@ -119,6 +123,10 @@ pub mod AquaStark {
                     decoration, id, aquarium_id, name, description, price, rarity,
                 );
 
+            let mut player: Player = world.read_model(get_caller_address());
+            player.decoration_count += 1;
+            world.write_model(@player);
+
             world.write_model(@decoration);
 
             decoration
@@ -134,7 +142,9 @@ pub mod AquaStark {
 
             let mut fish_owner: FishOwner = world.read_model(fish_id);
             fish_owner.owner = caller;
-
+            let mut player: Player = world.read_model(caller);
+            player.fish_count += 1;
+            world.write_model(@player);
             world.write_model(@fish_owner);
             world.write_model(@fish);
             fish

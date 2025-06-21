@@ -17,7 +17,7 @@ export function setupWorld(provider: DojoProvider) {
 			return await provider.execute(
 				snAccount,
 				build_AquaStark_addDecorationToAquarium_calldata(decoration, aquariumId),
-				"aqua_stark4",
+				"aqua_stark",
 			);
 		} catch (error) {
 			console.error(error);
@@ -38,7 +38,7 @@ export function setupWorld(provider: DojoProvider) {
 			return await provider.execute(
 				snAccount,
 				build_AquaStark_addFishToAquarium_calldata(fish, aquariumId),
-				"aqua_stark4",
+				"aqua_stark",
 			);
 		} catch (error) {
 			console.error(error);
@@ -59,7 +59,7 @@ export function setupWorld(provider: DojoProvider) {
 			return await provider.execute(
 				snAccount,
 				build_AquaStark_createAquariumId_calldata(),
-				"aqua_stark4",
+				"aqua_stark",
 			);
 		} catch (error) {
 			console.error(error);
@@ -80,7 +80,7 @@ export function setupWorld(provider: DojoProvider) {
 			return await provider.execute(
 				snAccount,
 				build_AquaStark_createDecorationId_calldata(),
-				"aqua_stark4",
+				"aqua_stark",
 			);
 		} catch (error) {
 			console.error(error);
@@ -101,7 +101,7 @@ export function setupWorld(provider: DojoProvider) {
 			return await provider.execute(
 				snAccount,
 				build_AquaStark_createFishId_calldata(),
-				"aqua_stark4",
+				"aqua_stark",
 			);
 		} catch (error) {
 			console.error(error);
@@ -122,7 +122,7 @@ export function setupWorld(provider: DojoProvider) {
 			return await provider.execute(
 				snAccount,
 				build_AquaStark_createNewPlayerId_calldata(),
-				"aqua_stark4",
+				"aqua_stark",
 			);
 		} catch (error) {
 			console.error(error);
@@ -140,7 +140,7 @@ export function setupWorld(provider: DojoProvider) {
 
 	const AquaStark_getAquarium = async (id: BigNumberish) => {
 		try {
-			return await provider.call("aqua_stark4", build_AquaStark_getAquarium_calldata(id));
+			return await provider.call("aqua_stark", build_AquaStark_getAquarium_calldata(id));
 		} catch (error) {
 			console.error(error);
 			throw error;
@@ -157,7 +157,7 @@ export function setupWorld(provider: DojoProvider) {
 
 	const AquaStark_getDecoration = async (id: BigNumberish) => {
 		try {
-			return await provider.call("aqua_stark4", build_AquaStark_getDecoration_calldata(id));
+			return await provider.call("aqua_stark", build_AquaStark_getDecoration_calldata(id));
 		} catch (error) {
 			console.error(error);
 			throw error;
@@ -174,7 +174,7 @@ export function setupWorld(provider: DojoProvider) {
 
 	const AquaStark_getFish = async (id: BigNumberish) => {
 		try {
-			return await provider.call("aqua_stark4", build_AquaStark_getFish_calldata(id));
+			return await provider.call("aqua_stark", build_AquaStark_getFish_calldata(id));
 		} catch (error) {
 			console.error(error);
 			throw error;
@@ -191,7 +191,7 @@ export function setupWorld(provider: DojoProvider) {
 
 	const AquaStark_getPlayer = async (address: string) => {
 		try {
-			return await provider.call("aqua_stark4", build_AquaStark_getPlayer_calldata(address));
+			return await provider.call("aqua_stark", build_AquaStark_getPlayer_calldata(address));
 		} catch (error) {
 			console.error(error);
 			throw error;
@@ -208,7 +208,7 @@ export function setupWorld(provider: DojoProvider) {
 
 	const AquaStark_getUsernameFromAddress = async (address: string) => {
 		try {
-			return await provider.call("aqua_stark4", build_AquaStark_getUsernameFromAddress_calldata(address));
+			return await provider.call("aqua_stark", build_AquaStark_getUsernameFromAddress_calldata(address));
 		} catch (error) {
 			console.error(error);
 			throw error;
@@ -228,7 +228,7 @@ export function setupWorld(provider: DojoProvider) {
 			return await provider.execute(
 				snAccount,
 				build_AquaStark_newAquarium_calldata(owner, maxCapacity),
-				"aqua_stark4",
+				"aqua_stark",
 			);
 		} catch (error) {
 			console.error(error);
@@ -249,7 +249,7 @@ export function setupWorld(provider: DojoProvider) {
 			return await provider.execute(
 				snAccount,
 				build_AquaStark_newDecoration_calldata(aquariumId, name, description, price, rarity),
-				"aqua_stark4",
+				"aqua_stark",
 			);
 		} catch (error) {
 			console.error(error);
@@ -270,7 +270,7 @@ export function setupWorld(provider: DojoProvider) {
 			return await provider.execute(
 				snAccount,
 				build_AquaStark_newFish_calldata(owner, species),
-				"aqua_stark4",
+				"aqua_stark",
 			);
 		} catch (error) {
 			console.error(error);
@@ -278,20 +278,20 @@ export function setupWorld(provider: DojoProvider) {
 		}
 	};
 
-	const build_AquaStark_register_calldata = (username: BigNumberish, species: CairoCustomEnum): DojoCall => {
+	const build_AquaStark_register_calldata = (username: BigNumberish): DojoCall => {
 		return {
 			contractName: "AquaStark",
 			entrypoint: "register",
-			calldata: [username, species],
+			calldata: [username],
 		};
 	};
 
-	const AquaStark_register = async (snAccount: Account | AccountInterface, username: BigNumberish, species: CairoCustomEnum) => {
+	const AquaStark_register = async (snAccount: Account | AccountInterface, username: BigNumberish) => {
 		try {
 			return await provider.execute(
 				snAccount,
-				build_AquaStark_register_calldata(username, species),
-				"aqua_stark4",
+				build_AquaStark_register_calldata(username),
+				"aqua_stark",
 			);
 		} catch (error) {
 			console.error(error);
